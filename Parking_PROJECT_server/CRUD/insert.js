@@ -41,4 +41,14 @@ api.post('/traderecord',function(req,res){
     })
     res.send("新增成功");
 })
+api.post('/traffic',function(req,res){
+    // res.send('123456');
+    console.log(req.body.monday)
+    var sql ='INSERT INTO traffic (parkingLot_id,parkingLot_name,monday,tuesday,wednesday,thursday,friday,saturday,sunday) VALUES (?,?,?,?,?,?,?,?,?)'
+    config.query(sql,[req.body.id,req.body.name,req.body.monday,req.body.tuesday,req.body.wednesday,req.body.thursday,req.body.friday,req.body.saturday,req.body.sunday],
+        function(err,result,fields){
+            console.log(err);
+    })
+    res.send("新增成功");
+})
 module.exports = api;

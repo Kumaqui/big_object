@@ -39,7 +39,7 @@ tr_pe varchar(50),
 FOREIGN KEY (member_id) REFERENCES member(member_id));
 
 create table carparking.traffic
-(parkingLot_id int,
+(parkingLot_id varchar(50) primary key,
 parkingLot_name varchar(50),
 monday JSON,
 tuesday JSON,
@@ -54,4 +54,4 @@ sunday JSON);
 
 -- 新增測試用資料
 INSERT INTO traderecord VALUES (1,1,'100000','2023/4/17','00:06:53',"taiwan","counterparty",1)
-INSERT INTO traffic(parkingLot_id,parkingLot_name,monday) VALUES (1,'台中停車場','{"h1":20,"h2":20,"h3":30,"h4":30}')
+INSERT INTO traffic(parkingLot_id,parkingLot_name,monday) VALUES ('台中停車場','台中停車場','{"h1":20,"h2":20,"h3":30,"h4":30}')
