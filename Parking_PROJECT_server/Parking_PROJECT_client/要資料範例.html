@@ -30,6 +30,7 @@
       var member = datafromS[0]
       $('#member').text(member.member_id+member.member_name+member.member_ac+member.member_pass+member.member_phone+member.member_email)
     })
+    // 用ID去要member資料http://localhost:3000/select/member
     $.ajax({
       url: `http://localhost:3000/select/member`,
       type: "post",
@@ -37,8 +38,7 @@
     }).done(function (x) {      
       var datafromS = JSON.parse(x);
       console.log(datafromS);
-      var member = datafromS[0]
-      // $('#member').text(member.member_id+member.member_name+member.member_ac+member.member_pass+member.member_phone+member.member_email)
+      var member = datafromS[0]      
     })
     // 要全部carstay資料http://localhost:3000/select/carstay
     $.ajax({
