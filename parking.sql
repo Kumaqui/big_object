@@ -5,7 +5,7 @@ create database CarParking default character set utf8;
 create table carparking.carstay 
 (sl_id int primary key NOT NULL, 
 cs_name varchar(50), 
-cs_type varchar(10) , 
+cs_type varchar(50) , 
 cs_water varchar(5), 
 cs_toilet varchar(5),
 cs_lng varchar(12) ,
@@ -37,6 +37,19 @@ tr_type int,
 tr_ps varchar(50),
 tr_pe varchar(50),
 FOREIGN KEY (member_id) REFERENCES member(member_id));
+
+create table carparking.payment
+(
+py_id int primary key NOT NULL AUTO_INCREMENT, 
+license varchar(10)  NOT NULL , 
+py_amount varchar(10),
+py_location varchar(50),
+py_ps_d varchar(50),
+py_ps_t varchar(50),
+py_pe_d varchar(50),
+py_pe_t varchar(50),
+FOREIGN KEY (license) REFERENCES license(license)
+);
 
 create table carparking.traffic
 (parkingLot_id varchar(50) primary key,

@@ -186,41 +186,36 @@
 
 
 
+
         $.ajax({
-            url: "http://localhost:3000/select/member/1",
+            url: "http://localhost:3000/select/traderecord/1",
             type: "GET"
         }).done(function (x) {
-            var datafromS = JSON.parse(x);
-            var member_money = datafromS[0].member_money
-            // console.log(member_money)
-            $.ajax({
-                url: "http://localhost:3000/select/traderecord/1",
-                type: "GET"
-            }).done(function (x) {
-                var traderecord = JSON.parse(x)
-                // console.log(traderecord)
-                for (i = 0; i < traderecord.length; i++) {
-                    var type
-                    switch (traderecord[i].tr_type) {
-                        case 0: type = '儲值'; break;
-                        case 1: type = '提領'; break;
-                        case 2: type = '繳費'; break;
-                    }
-                    $('#traderecord_data').append(`
-                        <div class="col-12 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
-                            <div class="col-12" style="text-align: left;">
+            var traderecord = JSON.parse(x)
+            // console.log(traderecord)
+            for (i = 0; i < traderecord.length; i++) {
+                var type
+                switch (traderecord[i].tr_type) {
+                    case 0: type = '儲值'; break;
+                    case 1: type = '提領'; break;
+                    case 2: type = '繳費'; break;
+                }
+                $('#traderecord_data').append(`
+                        <div class="col-16 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
+                            <div class="col-6" style="text-align: left;">
                                 <h1>${traderecord[i].tr_counterparty}</h1>
                                 <p style="color: gray;">Carparking${type}</p>
                                 <p style="color: gray">${traderecord[i].tr_date} ${traderecord[i].tr_time}</p>
                             </div>
-                            
+                            <div class="col-6" style="text-align: right;">
+                                <h1>${traderecord[i].tr_amount}元</h1>
+                            </div>                            
                             <hr>
                         </div>
                     `)
-                }
-            })
-
+            }
         })
+
         $('#dateChoose').on('click', function () {
             // console.log($('input[name=date1]').val())
             // console.log($('input[name=date2]').val())
@@ -252,7 +247,7 @@
                 for (i = 0; i < $('div[datatype]').length; i++) {
                     if ($($('div[datatype]')[i]).attr('datatype') == x) {
                         $($('div[datatype]')[i]).addClass("Data_off")
-                        
+
                     }
                 }
 

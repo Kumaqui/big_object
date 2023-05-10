@@ -1,10 +1,22 @@
 var express = require('express');
 var api = express.Router();
 var config = require('./config.js')
-api.get('/member/:id', function (req, res) {
+api.get('/member/:ac', function (req, res) {
     // res.send('123456');
+    var sql = 'SELECT *  FROM member WHERE member_ac=?;'
+    config.query(sql, [req.params.ac],
+        function (err, result, fields) {
+            if (err) {
+                console.log(err)
+                res.send('完蛋 出錯了' + err)
+            } else {
+                res.send(JSON.stringify(result));
+            }
+        })
+})
+api.post('/member', function (req, res) {
     var sql = 'SELECT *  FROM member WHERE member_id=?;'
-    config.query(sql, [req.params.id],
+    config.query(sql, [req.body.id],
         function (err, result, fields) {
             if (err) {
                 console.log(err)
@@ -75,5 +87,18 @@ api.get('/license/:id', function (req, res) {
             }
         })
 })
-
+api.get('/payment/:id',function(req,res){
+    // res.send('123456');
+    var sql ='SELECT * FROM  payment  WHERE license = ?'
+    config.query(sql,[req.params.id],
+        function(err,result,fields){
+            if (err) {
+                console.log(err)
+                res.send('完蛋 出錯了' + err)
+            } else {
+                console.log(result)
+                res.send(JSON.stringify(result));
+            }
+    })
+})
 module.exports = api;

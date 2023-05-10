@@ -20,15 +20,25 @@
   <div id="member"></div>
   <div id="carstay"></div>
   <script>
-    // 要member資料http://localhost:3000/select/member/member_id
+    // 要member資料http://localhost:3000/select/member/member_ac
     $.ajax({
-      url: "http://localhost:3000/select/member/1",
+      url: `http://localhost:3000/select/member/aaa`,
       type: "GET"
     }).done(function (x) {      
       var datafromS = JSON.parse(x);
       console.log(datafromS);
       var member = datafromS[0]
       $('#member').text(member.member_id+member.member_name+member.member_ac+member.member_pass+member.member_phone+member.member_email)
+    })
+    $.ajax({
+      url: `http://localhost:3000/select/member`,
+      type: "post",
+      data:{id:1}
+    }).done(function (x) {      
+      var datafromS = JSON.parse(x);
+      console.log(datafromS);
+      var member = datafromS[0]
+      // $('#member').text(member.member_id+member.member_name+member.member_ac+member.member_pass+member.member_phone+member.member_email)
     })
     // 要全部carstay資料http://localhost:3000/select/carstay
     $.ajax({
