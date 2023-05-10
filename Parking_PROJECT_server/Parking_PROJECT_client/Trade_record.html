@@ -237,7 +237,7 @@
             // console.log($('input[name=date1]').val())
             // console.log($('input[name=date2]').val())
             // console.log($($('div[datadate]')[1]).attr('datadate'))
-            // refreshData()
+            $(".Data_off").removeClass("Data_off")
             for (i = 0; i < $('div[datadate]').length; i++) {
                 var cd = new Date($($('div[datadate]')[i]).attr('datadate'))
                 if (isDuringDate(cd)) {
@@ -255,6 +255,7 @@
         })
         function typeChoose() {
             var datalist = [0, 1, 2]
+            $(".Data_off").removeClass("Data_off")
             if ($($('button[datatypechoose]')[0]).hasClass('checked_btn')) {
                 datalist = datalist.filter(data => data != 0)
             }
@@ -268,7 +269,6 @@
                 for (i = 0; i < $('div[datatype]').length; i++) {
                     if ($($('div[datatype]')[i]).attr('datatype') == x) {
                         $($('div[datatype]')[i]).addClass("Data_off")
-
                     }
                 }
 
