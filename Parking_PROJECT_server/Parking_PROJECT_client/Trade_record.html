@@ -30,12 +30,11 @@
         <div class="container" style="padding-top: 20px;">
             <div class="row">
                 <div class="col-12" style="text-align:center">
-                    <h6>
-                        會員編號 908823107
+                    <h6 id="memberid">
                     </h6>
                     <span style="font-size: 12px;">
                         TWD
-                    </span><span style="font-size: 44px;">1000</span>
+                    </span><span style="font-size: 44px;" id="money">1000</span>
                     <hr>
                     <div id="typeChoose">
 
@@ -129,6 +128,8 @@
 
 
     <script>
+        sessionStorage.setItem('member_id', '1')
+        var memberid = sessionStorage.getItem('member_id')
         // modal區
         var modal = document.getElementsByClassName("date_modal")
         $('#typeChoose .container .date1_btn').on('click', function () {
@@ -187,20 +188,33 @@
 
 
 
-        $.ajax({
-            url: "http://localhost:3000/select/traderecord/1",
-            type: "GET"
-        }).done(function (x) {
-            var traderecord = JSON.parse(x)
-            // console.log(traderecord)
-            for (i = 0; i < traderecord.length; i++) {
-                var type
-                switch (traderecord[i].tr_type) {
-                    case 0: type = '儲值'; break;
-                    case 1: type = '提領'; break;
-                    case 2: type = '繳費'; break;
-                }
-                $('#traderecord_data').append(`
+        function refreshData() {
+            var memberid = sessionStorage.getItem('member_id')
+            $.ajax({
+                url: `http://localhost:3000/select/member`,
+                type: "post",
+                data: { id: memberid }
+            }).done(function (x) {
+                var datafromS = JSON.parse(x);
+                $("#memberid").text("會員編號 " + datafromS[0].member_id)
+                $("#money").text(datafromS[0].member_money)
+
+            })
+            $('#traderecord_data').empty()
+            $.ajax({
+                url: `http://localhost:3000/select/traderecord/${memberid}`,
+                type: "GET"
+            }).done(function (x) {
+                var traderecord = JSON.parse(x)
+                // console.log(traderecord)
+                for (i = 0; i < traderecord.length; i++) {
+                    var type
+                    switch (traderecord[i].tr_type) {
+                        case 0: type = '儲值'; break;
+                        case 1: type = '提領'; break;
+                        case 2: type = '繳費'; break;
+                    }
+                    $('#traderecord_data').append(`
                         <div class="col-16 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
                             <div class="col-6" style="text-align: left;">
                                 <h1>${traderecord[i].tr_counterparty}</h1>
@@ -213,13 +227,17 @@
                             <hr>
                         </div>
                     `)
-            }
-        })
+                }
+            })
+            return true
+        }
 
+        refreshData()
         $('#dateChoose').on('click', function () {
             // console.log($('input[name=date1]').val())
             // console.log($('input[name=date2]').val())
-            console.log($($('div[datadate]')[1]).attr('datadate'))
+            // console.log($($('div[datadate]')[1]).attr('datadate'))
+            // refreshData()
             for (i = 0; i < $('div[datadate]').length; i++) {
                 var cd = new Date($($('div[datadate]')[i]).attr('datadate'))
                 if (isDuringDate(cd)) {
@@ -233,6 +251,9 @@
         })
 
         $('#trTypeChoose').on('click', function () {
+            typeChoose()
+        })
+        function typeChoose() {
             var datalist = [0, 1, 2]
             if ($($('button[datatypechoose]')[0]).hasClass('checked_btn')) {
                 datalist = datalist.filter(data => data != 0)
@@ -254,8 +275,7 @@
             })
             closeModal()
             maskOff()
-        })
-
+        }
         function isDuringDate(cd) {
             // var cd = new Date($($('div[datadate]')[1]).attr('datadate'))
             var d1 = new Date($('input[name=date1]').val())
