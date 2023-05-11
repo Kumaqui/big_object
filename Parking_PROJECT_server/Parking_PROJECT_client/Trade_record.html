@@ -23,7 +23,7 @@
     <!-- 導覽列 -->
     <div style="height: 80px; background-color: #0069B4; width: 100%; ">
         <button class="back_btn">x</button>
-        <h1 style="color: white; line-height:80px; text-align: center;">交易紀錄</h1>
+        <h1 style="color: white; line-height:80px; text-align: center;"><b> 交易紀錄</b></h1>
     </div>
     <!-- 會員資料區 -->
     <div style="background-color: white;">
@@ -196,7 +196,7 @@
                 data: { id: memberid }
             }).done(function (x) {
                 var datafromS = JSON.parse(x);
-                $("#memberid").text("會員編號 " + datafromS[0].member_id)
+                $("#memberid").text("會員帳號 " + datafromS[0].member_ac).css("font-weight","bold")
                 $("#money").text(datafromS[0].member_money)
 
             })
@@ -269,6 +269,7 @@
                 for (i = 0; i < $('div[datatype]').length; i++) {
                     if ($($('div[datatype]')[i]).attr('datatype') == x) {
                         $($('div[datatype]')[i]).addClass("Data_off")
+
                     }
                 }
 
@@ -288,6 +289,10 @@
             };
 
         }
+
+        $(".back_btn").on("click", function(){
+            window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
+        })
     </script>
 
 </body>

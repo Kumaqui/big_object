@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁</title>
+
+    <!-- css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../Parking_PROJECT_client/assets/css/design.css">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <!-- 導覽列 -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="" href="#">
+                <img src="./assets/image/img/logo-yellow.png" width="150px">
+            </a>
+
+            <div class="navbar-nav">
+                <a class="nav-link" href="#">登入</a>
+                <a class="nav-link" href="#">註冊</a>
+                <!-- 通知變數後續調整 : https://icons.getbootstrap.com/icons/app-indicator/ -->
+                <a class="nav-link" href="#"><i class="bi bi-app-indicator"></i></a>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主視覺 -->
+    <section class="bg-blue container-fluid py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <h1 class="pt-3 text-white">用最快的速度! 找到停車位!</h1>
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping"><i class="bi bi-geo-alt"></i></span>
+                        <input type="text" class="form-control" placeholder="快速查找">
+                    </div>
+                    <div class="my-3"></div>
+                    <button type="button" class="btn btn-outline-light">最近</button>
+                    <button type="button" class="btn btn-outline-light">最便宜</button>
+                    <button type="button" class="btn btn-outline-light">公有停車場</button>
+                    <button type="button" class="btn btn-outline-light">路邊停車</button>
+
+                </div>
+                <div class="col-12 col-md-6">
+                    <img src="./assets/image/img/index-01.png" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 四大功能介紹 -->
+    <section class="container py-4">
+        <div class="row">
+            <div class="col-12 ">
+                <h1 class="text-center">快速找停車，Car Parking都GO付</h1>
+                <h6 class="text-center">免嗶免掃免下車免感應 ， 一切App付款輕鬆達成 !</h6>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <div class="card text-bg-white mb-3 shadow-sm" style="max-width: 18rem;">
+                            <div class="p-3 text-center">
+                                <img src="./assets/image/img/index-02.png" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title text-center">停車流量</h4>
+                                <h6 class="card-text text-center">掌握時間與空位 預先判斷</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="card text-bg-white mb-3 shadow-sm" style="max-width: 18rem;">
+                            <div class="p-3 text-center">
+                                <img src="./assets/image/img/index-05.png" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title text-center">停車場</h4>
+                                <h6 class="card-text text-center">繳費免排隊 直接開出場</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="card text-bg-white mb-3 shadow-sm" style="max-width: 18rem;">
+                            <div class="p-3 text-center">
+                                <img src="./assets/image/img/index-04.png" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title text-center">路邊停車</h4>
+                                <h6 class="card-text text-center">超商免繳單 在家自動繳</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="card text-bg-white mb-3 shadow-sm" style="max-width: 18rem;">
+                            <div class="p-3 text-center">
+                                <img src="./assets/image/img/index-03.png" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title text-center">車宿地點</h4>
+                                <h6 class="card-text text-center">野外露宿更簡單</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 手機樣式簡介 -->
+    <section class="container-fluid bg-light-subtle py-5 ">
+        <div class="container">
+            <div class="row">
+                <div class="rounded-4 shadow-sm bg-white py-5 position-relative mx-md-auto" style="max-width: 800px;">
+                    <h1 class="text-center mb-4">開到哪，付到哪</h1>
+                    <img src="./assets/image/img/index-07.png" class="bg-app_a" alt="">
+                    <div class="appText_a">
+                        <div>
+                            <h3>支援付款場合</h3>
+                            <p class="mb-2">Car Parking 都任你付 ! 典籍下方查詢支援場站 。</p>
+                            <button type="button" class="btn btn-sm btn-outline-primary">路邊停車</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary">停車場</button>
+                        </div>
+                        <div class="mt-4">
+                            <h3>汽機車停車費</h3>
+                            <p>透過 Car Parking 付 ， 自動繳費功能，縣市路邊停車費 ， 每日即時自動繳清 ， 再也免跑超商。</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 手機樣式簡介2 -->
+    <section class="container-fluid py-5 px-0 mt-5 object-fit-scale ">
+        <div class="bg-yellow py-5 ">
+            <div class="position-relative mx-md-auto" style="max-width: 900px;">
+
+                <img src="./assets/image/img/index-08.png" class="bg-app_b">
+                <div class="container px-5 appText_b">
+                    <h1>綁定車牌<br>立即上路使用 Car Parking !</h1>
+                    <button type="button" class="btn btn-dark ">立即使用 !</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 輕鬆設定 ， 即可出發 -->
+    <section class="container-fluid bg-light-subtle py-5 ">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <h1 class="text-center">輕鬆設定 ， 即可出發</h1>
+                <h6 class="text-center">在欲使用 App 通路設定好車牌及錢包 ， 開始使用 。 </h6>
+
+                <div class="col-12 col-md-3 text-center d-flex flex-column align-items-center mx-sm-3 mt-3">
+                    <div class="rounded-3 shadow-sm bg-white py-5 text-center d-flex align-items-center justify-content-center "
+                        style="width: 200px;height:200px">
+                        <img src="./assets/image/img/index-09.png" class="" alt="">
+                    </div>
+                    <div style="width: 200px;">
+                        <h4 class="mt-2 text-center">設定車牌</h4>
+                        <h6 class=" text-center">可以增多組汽 、 機車車牌來使
+                            用 Car Parking 付 。
+                            <br>
+                            <a href="">如何設定</a>
+                        </h6>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 text-center d-flex flex-column align-items-center mx-sm-3 mt-3">
+                    <div class="rounded-3 shadow-sm bg-white py-5 text-center  d-flex align-items-center justify-content-center"
+                        style="width: 200px;height:200px ;">
+                        <img src="./assets/image/img/index-10.png" class="" alt="">
+                    </div>
+                    <div style="width: 200px;">
+                        <h4 class="mt-2 text-center">設定車牌</h4>
+                        <h6 class=" text-center">可以增多組汽 、 機車車牌來使
+                            用 Car Parking 付。
+                            <br>
+                            <a href="">如何設定</a>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 地圖遷入 -->
+    <section class="container py-5">
+        <h1 class="text-center">您在這裡</h1>
+        <!-- 地圖遷入 -->
+        <div class="d-flex flex-column align-items-center">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.7700089753916!2d121.47339331045227!3d25.007929839249265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a90acfc275d5%3A0x68e97873e54484b6!2z5Zib5Zi75ZmgIG9oIeunm-yeiOuLrS3pn5PlvI_ngrjpm54!5e0!3m2!1szh-TW!2stw!4v1681806250173!5m2!1szh-TW!2stw"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <footer class="bg-black">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-sm-6 col-12 mb-4 text-center">
+                    <img src="./assets/image/img/index-12.png" alt="" class="img-fluid">
+                </div>
+                <div class="col-sm-2 col-4">
+                    <h3 class="text-white">會員資訊</h3>
+                    <h5><a href="" class="text-white">個人資料</a></h5>
+                    <h5><a href="" class="text-white">常用車位</a></h5>
+                    <h5><a href="" class="text-white">通知訊息</a></h5>
+                </div>
+                <div class="col-sm-2 col-4">
+                    <h3 class="text-white">線上錢包</h3>
+                    <h5><a href="" class="text-white">消費紀錄</a></h5>
+                    <h5><a href="" class="text-white">付款車牌</a></h5>
+                    <h5><a href="" class="text-white">付費方式</a></h5>
+                </div>
+                <div class="col-sm-2 col-4">
+                    <h3 class="text-white">停車場資訊</h3>
+                    <h5><a href="" class="text-white">路邊車位</a></h5>
+                    <h5><a href="" class="text-white">停車場車位</a></h5>
+                    <h5><a href="" class="text-white">車宿地點</a></h5>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

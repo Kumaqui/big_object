@@ -33,7 +33,7 @@
 <body>
     <div style="height: 80px; background-color: #0069B4; width: 100%; ">
         <button class="back_btn">x</button>
-        <h1 style="color: white; line-height:80px; text-align: center;">選擇刪除車牌號碼</h1>
+        <h1 style="color: white; line-height:80px; text-align: center;"><b>選擇刪除車牌號碼</b></h1>
     </div>
     <div style="background-color: white;">
         <div class="container" style="padding-top: 20px;">
@@ -58,7 +58,9 @@
     </div>
     <script>
 
-
+        $(".back_btn").on("click", function(){
+            window.location =  "/Parking_PROJECT_client/Gold_flow_home.html"
+        })
         function refreshData() {
             $('#license_data').empty()
             $.ajax({
@@ -71,7 +73,7 @@
                     $('#license_data').append(
                         `<div class="col-12" style="display: flex; align-items: center;justify-content: center;">
                         <div
-                            style="background-image: url('./assets/image/pay-01.png'); width: 262px; height: 107px; text-align: center; vertical-align: bottom; margin-top: 5px;">
+                            style="background-image: url('./assets/image/license/pay-01.png'); width: 262px; height: 107px; text-align: center; vertical-align: bottom; margin-top: 5px;">
                             <button style="margin-top: 25px; font-size: 40px;" onclick="confirmdelete('${datafromS[i].license}')">${datafromS[i].license}</button>
                         </div>
                 </div>
@@ -97,6 +99,8 @@
                 data: {
                     license: x
                 }
+            }).done(function(){
+                window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
             })
         }
 
