@@ -1,6 +1,6 @@
 var member_ac =  localStorage.getItem("member_ac")  
 if(!member_ac){
-    window.location = "/Parking_PROJECT_client/login.html"
+    window.location = "./login.html"
 }
 const reloadBtn = document.getElementById("payment");
 const loader = document.getElementById("loader");
@@ -390,7 +390,7 @@ $("#payment_sure").on("click", function () {
                         }
                     })
                 });
-                window.location = "/Parking_PROJECT_client/Payment_success.html"
+                window.location = "./Payment_success.html"
 
             } else {
                 // 隱藏繳費框
@@ -419,7 +419,7 @@ payment_sure.onclick = function () {
 }
 
 $(".payment_page").on("click", function () {
-    window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
+    window.location = "./Gold_flow_home.html"
 })
 
 
@@ -428,9 +428,9 @@ $(".stored").on("click", function () {
     var url = window.location.href;
     // console.log(url)
     if (url.indexOf("Payment") !== -1) {
-        sessionStorage.setItem('returnUrl', '/Parking_PROJECT_client/Payment.html');
+        sessionStorage.setItem('returnUrl', './Payment.html');
     } else {
-        sessionStorage.setItem("returnUrl", "/Parking_PROJECT_client/index.html");
+        sessionStorage.setItem("returnUrl", "./index.html");
     }
 });
 

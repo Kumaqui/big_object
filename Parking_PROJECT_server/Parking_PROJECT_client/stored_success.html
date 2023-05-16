@@ -246,10 +246,10 @@
             // 判斷轉至繳費頁面還是首頁
             var url = sessionStorage.getItem('returnUrl');
             if (url) {
-                window.location = "/Parking_PROJECT_client/Payment.html"
+                window.location = "./Payment.html"
                 sessionStorage.removeItem('returnUrl')
             } else {
-                window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
+                window.location = "./Gold_flow_home.html"
             }
 
         })
