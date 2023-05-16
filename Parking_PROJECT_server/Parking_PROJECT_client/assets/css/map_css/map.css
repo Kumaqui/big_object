@@ -284,6 +284,17 @@ dialog {
     border: 2px solid rgba(0, 0, 0, 0.684);
   }
 
+#Dialog_road_fee{
+    position: fixed;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: none;
+    border: none;
+    z-index: 999;
+    max-width: 500px;
+    left:194px;
+    top: -200px;
+}
 
 #Dialog_fee{
     position: fixed;

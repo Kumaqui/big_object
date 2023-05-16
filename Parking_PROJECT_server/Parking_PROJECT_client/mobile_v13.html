@@ -4,10 +4,12 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mobile_v11</title>
+    <title>Parking map</title>
     <!-- leaflet -->
-    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <!-- <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script> -->
+    <script src="./assets/js/map_control_js/leaflet/leaflet.js"></script>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" /> -->
+    <link rel="stylesheet" href="./assets/css/map_control_css/leaflet/leaflet.css" />
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +30,8 @@
     <meta charset="UTF-8">
     <!-- Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
     <style>
         body {
@@ -120,20 +124,12 @@
         <ul class="list-menu" style="display: none;z-index: 99;background-color: white;cursor: pointer;width: 100%;">
 
             <!-- <div class="d-grid  w-100" style="z-index: 99;">
-                <button class="btn btn-primary border-0 w-100 navlist" type="button">Where my car !</button>
-            </div> -->
-            <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">繳費紀錄</button>
             </div>
 
             <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">付費車牌</button>
             </div>
-
-            <!-- <div class="d-grid  w-100" style="z-index: 99;">
-                <button class="btn btn-primary border-0 w-100 navlist" type="button">常用車位</button>
-            </div> -->
-
             <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">個人資訊</button>
             </div>
@@ -143,9 +139,9 @@
             <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">通知中心</button>
             </div>
-            <div class="d-grid  w-100" style="z-index: 99;">
-                <button class="btn btn-primary border-0 w-100 navlist" type="button">登出</button>
-            </div>
+            <div id="logIO" class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">登入</button>
+            </div> -->
         </ul>
     </div>
     <!-- 覆蓋式視窗 -->
@@ -173,7 +169,7 @@
             <img id="car_parking_img" class="map_select" src="./assets/image/map_image/car_parking_select.jpg" alt=""
                 style="cursor: pointer;" onclick="">
             <img id="car_stay_img" class="map_select" src="./assets/image/map_image/car_stay.jpg" alt=""
-                style="cursor: pointer;" onclick="window.location.href = './Mobile_v1_carStay.html';">
+                style="cursor: pointer;" onclick="window.location.href = './mobile_carStay_v3.html';">
         </div>
     </dialog>
 
@@ -189,7 +185,7 @@
             <div id="filter">
                 <label for="distance_select"></label>
                 <select id="distance_select">
-                    <option value="1000">距離(預設)</option>
+                    <option value="2000">距離(預設)</option>
                     <option value="300">300公尺內</option>
                     <option value="500">500公尺內</option>
                     <option value="800">800公尺內</option>
@@ -283,7 +279,15 @@
                             </div>
                             <div id="popular_time_graph" class="row">
                                 <p class="col-12">熱門時段</p>
-                                <img src="./assets/image/map_image/popular_time_graph.svg" alt="">
+                                <div class="main divWeeks" id="divWeek"
+                                    style="width: 380px;height: 270px; border: 1px solid #838080;border-radius: 2%;">
+                                    <div class="chart-box dark">
+                                        <div class="chart-body ">
+                                            <canvas id="myChart" width="100" height="90"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <img src="./assets/image/map_image/popular_time_graph.svg" alt=""> -->
                             </div>
                         </div>
                     </div>
@@ -425,7 +429,7 @@
                                 <b>${parkDct['Position']}</b><br>
                                 總車位數：${parkDct['TotalCar']}<br>
                                 剩餘車位：${CorrectAvailableCar}<br>
-                                <button class="routing" onclick="routing(${parkDct['Y']}, ${parkDct['X']})>開始導航</button>
+                                <button onclick="routing(${parkDct['Y']}, ${parkDct['X']})">開始導航</button>
                                 `)
                 // add parking info to list(if AvailableCar < 0)
             } else {
@@ -433,7 +437,7 @@
                                 <b>${parkDct['Position']}</b><br>
                                 總車位數：${parkDct['TotalCar']}<br>
                                 剩餘車位：${parkDct['AvailableCar']}<br>
-                                <button class="routing" onclick="routing(${parkDct['Y']}, ${parkDct['X']})">開始導航</button>
+                                <button onclick="routing(${parkDct['Y']}, ${parkDct['X']})>開始導航</button>
                                 `)
                 // add parking info to list(if AvailableCar >= 0)
             }
@@ -470,7 +474,14 @@
         });
         map.addControl(search);
 
-        let usermarker, userCircle, userZoomed, userlat, userlng, searchlat, searchlng, searchmarker, searchCircle;
+        let usermarker, userCircle, userZoomed, userlat, userlng, searchlat = 0, searchlng = 0, searchmarker, searchCircle;
+
+        searchCircle = L.circle([0, 0], {
+            color: 'blue',
+            fillColor: '#005DFF70',
+            fillOpacity: 0.3,
+            radius: 0
+        }).addTo(map);
 
         map.on('geosearch/showlocation', function (e) {
             searchlat = e.location.y;
@@ -483,7 +494,7 @@
             }
             // add search marker
             searchmarker = L.marker([searchlat, searchlng], { icon: searchIcon }).addTo(map);
-            if ($('#distance_select').val() == "1000") {
+            if ($('#distance_select').val() == "2000") {
                 searchCircle = L.circle([searchlat, searchlng], {
                     color: 'blue',
                     fillColor: '#005DFF70',
@@ -506,12 +517,15 @@
             $('.reset').click(function () {
                 map.removeLayer(searchmarker);
                 map.removeLayer(searchCircle);
+                searchlat = 0;
+                searchlng = 0;
                 $('.roadOkDisabled').remove();
                 $('.roadNonDisabled').remove();
                 $('.roadOkParents').remove();
                 $('.roadNonParents').remove();
                 $('.roadOkNormal').remove();
                 $('.roadNonNormal').remove();
+                setTimeout(refrash_road($('#distance_select').val()), 1000);
             })
 
         });
@@ -558,7 +572,7 @@
         addUserPlace = (area, parkType, userlat, userlng) => {
             // add area
             // console.log('ok')
-            if (area == "1000") {
+            if (area == "2000") {
                 userCircle = L.circle([userlat, userlng], {
                     color: 'blue',
                     fillColor: '#005DFF70',
@@ -719,7 +733,7 @@
         $('#distance_select').change(function () {
             map.removeLayer(userCircle);
             map.removeLayer(searchCircle);
-            if ($(this).val() == "1000") {
+            if ($(this).val() == "2000") {
                 setTimeout(refrash_road($(this).val()), 1000);
                 setTimeout(search_road($(this).val()), 1000)
             } else {
@@ -1317,7 +1331,7 @@
         redo.addEventListener('click', () => {
             // 顯示訊息
             const message = document.createElement('div');
-            message.innerText = '已更新清單資訊';
+            message.innerText = '更新頁面';
             message.style.position = 'fixed';
             message.style.top = '50%';
             message.style.left = '50%';
@@ -1332,35 +1346,29 @@
             // 關閉訊息
             setTimeout(() => {
                 message.remove();
-            }, 700);
+            }, 400);
         });
 
+        // 檢查Local Storage中是否有名為"visited"的項目
+        if (!localStorage.getItem("visited")) {
+            // 如果"visited"不存在，將其設置為true並重新加載頁面
+            localStorage.setItem("visited", true);
+            // 在頁面加載後延遲兩秒後重新加載
+            setTimeout(function () {
+                window.location.reload();
+            }, 4000);
+        }
+        // 將按鈕的單擊事件處理程序設置為防止單擊後重新加載
+        // document.getElementById("reload-btn").addEventListener("click", function (event) {
+        //     event.preventDefault();
+        // });
 
-        // 加入最愛的提示訊息
-        const likeBtns = document.querySelectorAll('#like');
-        likeBtns.forEach(likeBtn => {
-            likeBtn.addEventListener('click', () => {
-                // 顯示訊息
-                const message = document.createElement('div');
-                message.innerText = '已加到最愛清單';
-                message.style.position = 'fixed';
-                message.style.top = '50%';
-                message.style.left = '50%';
-                message.style.transform = 'translate(-50%, -50%)';
-                message.style.padding = '10px 20px';
-                message.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-                message.style.color = '#fff';
-                message.style.borderRadius = '5px';
-                message.style.zIndex = 9999;
-                document.body.appendChild(message);
 
-                // 關閉訊息
-                setTimeout(() => {
-                    message.remove();
-                }, 700);
-            });
-        });
+
+
+
     </script>
+
     <script>
 
         // 取得台中停車場資訊
@@ -1442,7 +1450,15 @@
                             // 導向google導航網頁
                             var url = 'https://www.google.com/maps/dir/?api=1&destination=' + y + ',' + x;
                             window.open(url);
+                        },
+                        sortParkingLotByDistance() {
+                            this.parkingLot.sort((a, b) => {
+                                return a.distance - b.distance;
+                            });
                         }
+                    },
+                    mounted() {
+                        this.sortParkingLotByDistance();
                     }
                 })
                 // 在這裡使用parkingLot
@@ -1485,6 +1501,150 @@
                     }
                 }
             })
+            .then(() => {
+                // 流量表
+                var parkingLotT = parkingLot;
+                trafficData()
+                function trafficData() {
+                    return new Promise((resolve, reject) => {
+                        $.ajax({
+                            url: `http://localhost:3000/select/traffic`,
+                            type: "GET"
+                        }).done(function (x) {
+                            const datafromT = JSON.parse(x);
+                            resolve(datafromT);
+
+
+                            //停車場篩選用程式碼
+                            var parkingItemsT = document.querySelectorAll("#parking_lot_item .accordion-item");
+
+                            var parkingTypeTArr = [];
+                            var parkingNameTArr = [];
+
+                            for (var i = 0; i < parkingItemsT.length; i++) {
+                                var parkingItemT = parkingItemsT[i];
+                                var parkingNameT = parkingItemT.querySelector(".parking_position").textContent;
+                                var parkingTypeT = parkingLotT.find(function (x) {
+                                    return x.Position === parkingNameT;
+                                });
+
+                                var parking = parkingItemT.querySelector(".parking_position").innerText;
+                                let categoriesP = parking.split('-');
+                                // console.log(categoriesP);
+                                for (let i = 0; i < datafromT.length; i++) {
+                                    let categoriesT = datafromT[i].parkingLot_name.split('-');
+                                    if (categoriesP[2] == categoriesT[2]) {
+                                        // 創建折線圖
+                                        var monday = JSON.parse(datafromT[i].monday);
+                                        var tuesday = JSON.parse(datafromT[i].tuesday);
+                                        var wednesday = JSON.parse(datafromT[i].wednesday);
+                                        var thursday = JSON.parse(datafromT[i].thursday);
+                                        var friday = JSON.parse(datafromT[i].friday);
+                                        var saturday = JSON.parse(datafromT[i].saturday);
+                                        var sunday = JSON.parse(datafromT[i].sunday);
+                                        var week = [sunday, monday, tuesday, wednesday, thursday, friday, saturday];
+                                        console.log(week);
+
+                                        var dayOfWeek = new Date().getDay();
+                                        // console.log(dayOfWeek);
+
+                                        // 獲取當天對應的星期數據
+                                        var todayData = week[dayOfWeek];
+                                        var today = Object.values(todayData);
+                                        // console.log(today);
+
+                                        var labels = [];
+                                        for (var k = 0; k < 24; k++) {
+                                            labels.push(k + '時');
+                                        }
+   
+                                        var canvas = parkingItemT.querySelector("#myChart");
+                                        var ctx = canvas.getContext('2d');
+
+                                        // 定義漸變顏色
+                                        var gradient = ctx.createLinearGradient(100, 50, 100, 300);
+                                        gradient.addColorStop(0, 'rgba(123, 229, 255 , 1)');
+                                        gradient.addColorStop(0.5, 'rgba(123, 169, 255, 0.5)');
+                                        gradient.addColorStop(1, 'rgba(192, 142, 241, 0.3)');
+
+                                        var chart = new Chart(ctx, {
+                                            type: 'line',
+                                            data: {
+                                                labels: labels,
+                                                datasets: [{
+                                                    label: '使用率',
+                                                    data: today,
+                                                    backgroundColor: gradient,
+                                                    borderColor: 'rgb(136, 226, 226)',
+                                                    fill: true, // 是否填滿色彩
+                                                    pointStyle: 'rect',
+                                                    pointRadius: 2,
+                                                    pointHoverRadius: 7,
+                                                    pointBackgroundColor: 'rgb(136, 226, 226)',
+                                                }]
+                                            },
+                                            options: {
+                                                layout: {
+                                                    padding: { left: 20, right: 0, top: 20, bottom: 30 },
+                                                },
+                                                tooltips: {
+                                                    callbacks: {
+                                                        label: function (tooltipItem, data) {
+                                                            return "使用率: " + tooltipItem.yLabel + "%";
+                                                        }
+                                                    }
+                                                },
+                                                legend: {
+                                                    display: false,         // 關閉顏色框
+                                                },
+                                                scales: {
+                                                    xAxes: [{
+                                                        gridLines: {
+                                                            display: true, // X軸 線條不顯示 
+                                                        },
+                                                        ticks: {
+                                                            fontColor: "#8b8b8b", // X軸 文字顏色
+                                                            maxTicksLimit: 4,
+                                                            autoSkip: true,
+                                                            maxRotation: 0,
+                                                            minRotation: 0,
+                                                            autoSkipPadding: 15
+                                                        },
+                                                    }],
+                                                    yAxes: [{
+                                                        gridLines: {
+                                                            display: true,
+
+                                                        },
+                                                        position: 'right',
+                                                        ticks: {
+                                                            fontColor: "#8b8b8b", // Y軸 文字顏色 
+                                                            maxTicksLimit: 6,
+                                                            beginAtZero: true,
+                                                            min: 0,
+                                                            max: 100,
+                                                            stepSize: 10,
+                                                            callback: function (value) {
+                                                                return value + "%";
+                                                            }
+                                                        }
+                                                    }]
+                                                }
+                                            }
+                                        })
+
+                                    }
+                                }
+
+                            }
+                        }
+                        )
+
+                    })
+                }
+            })
+
+
 
 
 
@@ -1566,7 +1726,15 @@
                             // 導向google導航網頁
                             var url = 'https://www.google.com/maps/dir/?api=1&destination=' + y + ',' + x;
                             window.open(url);
+                        },
+                        sortParkingRoadByDistance() {
+                            this.parkingRoad.sort((a, b) => {
+                                return a.distance - b.distance;
+                            });
                         }
+                    },
+                    mounted() {
+                        this.sortParkingRoadByDistance();
                     }
                 })
 
@@ -1615,6 +1783,225 @@
 
 
 
+    </script>
+
+    <!-- 流量表 -->
+    <!-- <script>
+        // var dataObj = {};
+        // trafficData()
+            .then((parkingLot) => {
+
+                function trafficData() {
+                    return new Promise((resolve, reject) => {
+                        $.ajax({
+                            url: `http://localhost:3000/select/traffic`,
+                            type: "GET"
+                        }).done(function (x) {
+                            const datafromT = JSON.parse(x);
+                            resolve(datafromT);
+                            // console.log(datafromT);
+                            // dataObj[datafromT['parkingLot_name']] = [];
+
+                            //停車場篩選用程式碼
+                            var parkingItemsT = document.querySelectorAll("#parking_lot_item .accordion-item");
+                            // filterParkingItemsT()
+                            function filterParkingItemsT() {
+                                for (var i = 0; i < parkingItemsT.length; i++) {
+                                    var parkingItemT = parkingItemsT[i];
+                                    var parkingNameT = parkingItemT.querySelector(".parking_position").textContent;
+                                    var parkingType = parkingLot.find(function (item) { return item.Position === parkingNameT }).Type;
+                                    console.log(parkingLot);
+
+
+                                    if (parkingNameT == datafromT.parkingLot_name) {
+                                        for (let j = 0; j < parkingItemsT.length; j++) {
+                                            // 南屯區-交通局-文心森林公園附屬P
+
+                                            var monday = JSON.parse(datafromT.monday);
+                                            var tuesday = JSON.parse(datafromT.tuesday);
+                                            var wednesday = JSON.parse(datafromT.wednesday);
+                                            var thursday = JSON.parse(datafromT.thursday);
+                                            var friday = JSON.parse(datafromT.friday);
+                                            var saturday = JSON.parse(datafromT.saturday);
+                                            var sunday = JSON.parse(datafromT.sunday);
+
+                                            var week = [sunday, monday, tuesday, wednesday, thursday, friday, saturday];
+                                            // console.log(week);
+
+                                            var dayOfWeek = new Date().getDay();
+                                            // console.log(dayOfWeek);
+
+                                            // 獲取當天對應的星期數據
+                                            var todayData = week[dayOfWeek];
+                                            var today = Object.values(todayData);
+                                            // console.log(today);
+
+                                            var labels = [];
+                                            for (var k = 0; k < 24; k++) {
+                                                labels.push(k + '時');
+                                            }
+
+
+
+                                            // 創建折線圖
+                                            var canvas = document.getElementById('myChart');
+                                            var ctx = canvas.getContext('2d');
+
+                                            // 定義漸變顏色
+                                            var gradient = ctx.createLinearGradient(100, 50, 100, 300);
+                                            gradient.addColorStop(0, 'rgba(123, 229, 255 , 1)');
+                                            gradient.addColorStop(0.5, 'rgba(123, 169, 255, 0.5)');
+                                            gradient.addColorStop(1, 'rgba(192, 142, 241, 0.3)');
+
+                                            var chart = new Chart(ctx, {
+                                                type: 'line',
+                                                data: {
+                                                    labels: labels,
+                                                    datasets: [{
+                                                        label: '使用率',
+                                                        data: today,
+                                                        backgroundColor: gradient,
+                                                        borderColor: 'rgb(136, 226, 226)',
+                                                        fill: true, // 是否填滿色彩
+                                                        pointStyle: 'rect',
+                                                        pointRadius: 2,
+                                                        pointHoverRadius: 7,
+                                                        pointBackgroundColor: 'rgb(136, 226, 226)',
+                                                    }]
+                                                },
+                                                options: {
+                                                    layout: {
+                                                        padding: { left: 20, right: 0, top: 20, bottom: 30 },
+                                                    },
+                                                    tooltips: {
+                                                        callbacks: {
+                                                            label: function (tooltipItem, data) {
+                                                                return "使用率: " + tooltipItem.yLabel + "%";
+                                                            }
+                                                        }
+                                                    },
+                                                    legend: {
+                                                        display: false,         // 關閉顏色框
+                                                    },
+                                                    scales: {
+                                                        xAxes: [{
+                                                            gridLines: {
+                                                                display: true, // X軸 線條不顯示 
+                                                            },
+                                                            ticks: {
+                                                                fontColor: "#8b8b8b", // X軸 文字顏色
+                                                                maxTicksLimit: 4,
+                                                                autoSkip: true,
+                                                                maxRotation: 0,
+                                                                minRotation: 0,
+                                                                autoSkipPadding: 15
+                                                            },
+                                                        }],
+                                                        yAxes: [{
+                                                            gridLines: {
+                                                                display: true,
+
+                                                            },
+                                                            position: 'right',
+                                                            ticks: {
+                                                                fontColor: "#8b8b8b", // Y軸 文字顏色 
+                                                                maxTicksLimit: 6,
+                                                                beginAtZero: true,
+                                                                min: 0,
+                                                                max: 100,
+                                                                stepSize: 10,
+                                                                callback: function (value) {
+                                                                    return value + "%";
+                                                                }
+                                                            }
+                                                        }]
+                                                    }
+
+                                                }
+
+                                            });
+
+                                        }
+
+
+                                    }
+                                }
+                            }
+
+
+
+
+                        })
+
+                    })
+                }
+                // console.log(datafromT);
+
+
+            })
+
+
+
+
+
+
+
+    </script> -->
+
+       <!-- 登入後判斷頁面呈現與切換 -->
+       <script>
+        // 假設 memberID 存在於 localStorage 中
+        var memberID = localStorage.getItem('memberID');
+        var memberAc = localStorage.getItem('member_ac');
+
+        var loginHtml = `
+                <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">繳費紀錄</button>
+            </div>
+
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">付費車牌</button>
+            </div>
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">個人資訊</button>
+            </div>
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">付款方式</button>
+            </div>
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">通知中心</button>
+            </div>
+            <div id="logIO" class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist clearLocalStroage" type="button">登出</button>
+            </div>
+        `;
+
+
+    
+
+        var SignOutHtml = `   
+        <div class="d-grid  w-100" style="z-index: 99;">
+            
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <a class="btn btn-primary border-0 w-100 navlist" type="button" href="register.html">註冊</a>
+            </div>
+            <div id="logIO" class="d-grid  w-100" style="z-index: 99;">
+                <a class="btn btn-primary border-0 w-100 navlist" type="button" href="login.html">登入</a>
+            </div>
+        `
+        if (memberID) {
+            // 若 memberID 存在，表示已登入，顯示登出標籤，隱藏登入標籤
+            $('.list-menu').html(loginHtml);
+        } else {
+            // 若 memberID 不存在，表示未登入，顯示登入標籤，隱藏登出標籤
+            $('.list-menu').html(SignOutHtml);
+        }
+
+        $('.clearLocalStroage').on('click', function () {
+            localStorage.removeItem('memberID');
+        });
+
+       
     </script>
 </body>
 

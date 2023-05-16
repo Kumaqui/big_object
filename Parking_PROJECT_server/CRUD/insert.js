@@ -16,8 +16,9 @@ api.post('/carstay',function(req,res){
 })
 api.post('/member',function(req,res){
     // res.send('123456');
-    var sql ='INSERT INTO member(member_name,member_ac,member_pass, member_phone,member_email) VALUES (?,?,?,?,?)'
-    config.query(sql,[req.body.name,req.body.ac,req.body.pass,req.body.phone,req.body.email],
+    console.log(req.body.name,req.body.ac,req.body.pass,req.body.phone,req.body.email, req.body.money)
+    var sql ='INSERT INTO member(member_name,member_ac,member_pass, member_phone,member_email, member_money) VALUES (?,?,?,?,?,?)'
+    config.query(sql,[req.body.name,req.body.ac,req.body.pass,req.body.phone,req.body.email, req.body.money],
         function(err,result,fields){
             console.log(err);
     })

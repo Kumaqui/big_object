@@ -101,18 +101,4 @@ api.get('/payment/:id',function(req,res){
             }
     })
 })
-api.get('/payment',function(req,res){
-    // res.send('123456');
-    var sql ='SELECT * FROM  payment'
-    config.query(sql,[req.params.id],
-        function(err,result,fields){
-            if (err) {
-                console.log(err)
-                res.send('完蛋 出錯了' + err)
-            } else {
-                console.log(result)
-                res.send(JSON.stringify(result));
-            }
-    })
-})
 module.exports = api;

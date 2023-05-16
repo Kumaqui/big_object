@@ -232,8 +232,8 @@
             <!-- 儲值金額輸入框 -->
             <div class="row ms-4">
                 <div class="col-11 ">
-                    <input value="" required placeholder="0" style="width: 100%;" id="input" type="number" ondrop="return false;"
-                        onpaste="return false;" />
+                    <input value="" required placeholder="0" style="width: 100%;" id="input" type="number"
+                        ondrop="return false;" onpaste="return false;" />
                 </div>
                 <div class=" col-1 ">
                     <button id="mydelete" style="margin-top: 15px;" class="e05 border_none">
@@ -254,7 +254,12 @@
             <b>下一步</b> </button>
     </div>
 
-
+    <script>
+        var member_ac =  localStorage.getItem("member_ac")  
+        if(!member_ac){
+            window.location = "/Parking_PROJECT_client/login.html"
+        }
+    </script>
 
     <script>
         // console.log($)

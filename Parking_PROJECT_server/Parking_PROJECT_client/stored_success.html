@@ -198,28 +198,30 @@
         var th = date.getHours();
         var tmin = date.getMinutes();
         var ts = date.getSeconds();
-    
-        th = th < 10? "0"+th :th;
-        tmin = tmin < 10? "0"+tmin :tmin;
-        ts = ts < 10? "0"+ts :ts;
-        td = td < 10? "0"+td : td;
+
+        th = th < 10 ? "0" + th : th;
+        tmin = tmin < 10 ? "0" + tmin : tmin;
+        ts = ts < 10 ? "0" + ts : ts;
+        td = td < 10 ? "0" + td : td;
         if (tm.toString.length == 1) {
             tm = "0" + tm;
         }
-    
+        var id = localStorage.getItem("memberID")
+        // console.log(id)
         $.ajax({
             url: "http://localhost:3000/select/member",
             type: "post",
-            data:{id:1}
+            data : {id}
         }).done(function (x) {
             var data = JSON.parse(x);
+            // console.log(data)
             var total_money = Number(data[0].member_money) + Number(stored)
             $(".member_money").append(total_money)
             $.ajax({
                 url: 'http://localhost:3000/update/membermoney',
                 type: "PUT",
                 data: {
-                    id: 1,
+                    id: id,
                     money: stored
                 }
             })
@@ -232,11 +234,11 @@
                 type: 'POST',
                 url: 'http://localhost:3000/insert/traderecord',
                 data: {
-                    id: 1,
+                    id: id,
                     amount: stored,
                     date: `${date.getFullYear()}/${tm}/${td}`,
                     time: `${th}:${tmin}:${ts}`,
-                    counterparty:bank,
+                    counterparty: bank,
                     type: "0",
                 }
             })
@@ -245,7 +247,7 @@
             var url = sessionStorage.getItem('returnUrl');
             if (url) {
                 window.location = "/Parking_PROJECT_client/Payment.html"
-                sessionStorage.removeItem('returnUrl') 
+                sessionStorage.removeItem('returnUrl')
             } else {
                 window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
             }

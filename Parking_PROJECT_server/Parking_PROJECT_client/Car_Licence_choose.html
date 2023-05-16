@@ -57,14 +57,21 @@
 
     </div>
     <script>
-
-        $(".back_btn").on("click", function(){
-            window.location =  "/Parking_PROJECT_client/Gold_flow_home.html"
+        var member_ac =  localStorage.getItem("member_ac")  
+        if(!member_ac){
+            window.location = "/Parking_PROJECT_client/login.html"
+        }
+    </script>
+    <script>
+        var id = localStorage.getItem("memberID")
+        console.log(id)
+        $(".back_btn").on("click", function () {
+            window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
         })
         function refreshData() {
             $('#license_data').empty()
             $.ajax({
-                url: "http://localhost:3000/select/license/1",
+                url: `http://localhost:3000/select/license/${id}`,
                 type: "GET"
             }).done(function (x) {
                 var datafromS = JSON.parse(x);
@@ -99,7 +106,7 @@
                 data: {
                     license: x
                 }
-            }).done(function(){
+            }).done(function () {
                 window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
             })
         }

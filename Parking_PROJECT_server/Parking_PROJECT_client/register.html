@@ -46,7 +46,7 @@
 
 <body>
     <!--表單內容-->
-    <form style="margin: auto; width: 100%;">
+    <form style="margin: auto; width: 100%;" class="mb-4">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -62,26 +62,26 @@
             </div>
 
             <div class="row form-group justify-content-center">
-                <div class="col-12">
+                <div class="col-12 mb-4">
                     <label class="accPwdWord"><span>*</span> 會員帳號</label>
-                    <input name="ac" id="userAccount" type="text" class="border border-1 rounded-2  mb-4 accPwd "
+                    <input name="ac" id="userAccount" type="text" class="border border-1 rounded-2   accPwd "
                         placeholder="User001" required="required" minlength="2">
                 </div>
             </div>
 
             <div class="row form-group justify-content-center">
-                <div class="col-12">
+                <div class="col-12 mb-4">
                     <label class="accPwdWord"><span>*</span> 聯絡手機</label>
-                    <input name="phone" id="userPhone" class="border border-1 rounded-2  mb-4 accPwd" type="tel"
+                    <input name="phone" id="userPhone" class="border border-1 rounded-2   accPwd" type="tel"
                         placeholder="09xxxxxxxx" required="required" maxlength="11" pattern="09+[0-9]{8}"
                         oninput="setCustomValidity('');" oninvalid="setCustomValidity('手機號碼格式錯誤，須為09開頭。');">
                 </div>
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-12">
+                <div class="col-12 mb-4">
                     <label class="accPwdWord"><span>*</span> 聯絡信箱</label>
-                    <input name="email" id="userEmail" class="border border-1 rounded-2 mb-4 accPwd" type="email"
+                    <input name="email" id="userEmail" class="border border-1 rounded-2  accPwd" type="email"
                         placeholder="a@g.xx" required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                 </div>
             </div>
@@ -114,10 +114,10 @@
 
 
             <div class="row justify-content-center">
-                <div class="col-12 placeCenter">
+                <div class="col-12 placeCenter mb-4">
                     <button type="button" id="registerBtn"
                         style="width: 50%; height: 35px; background-color: #34A853; color: white;"
-                        class="btn btn-block placeCenter mt-4"><span style="font-size: 18px;"><b>註冊</b> </span>
+                        class="btn btn-block placeCenter"><span style="font-size: 18px;"><b>註冊</b> </span>
                     </button>
                 </div>
             </div>
@@ -174,14 +174,13 @@
                 email: email,
                 money: money
             };
-
             $.ajax({
                 type: 'POST',
                 url: 'http://localhost:3000/insert/member',
-                data: JSON.stringify(formData),
-                contentType: 'application/json'
+                data: formData
+               
             })
-            
+
             alert('註冊成功')
             window.location.href = ('login.html'); //頁面跳轉
         });

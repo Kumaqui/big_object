@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mobile_v8.2</title>
+    <title>Car stay map</title>
     <!-- leaflet -->
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
@@ -103,12 +103,13 @@
                         style="color: white;cursor: pointer;"></i></span>
             </div>
             <div style="display: flex; align-items: center;">
-                <span class="fa-stack fa-xl" style="margin-right: 15px;z-index: 99;" onclick="showDialog_info()">
+                <!-- <span class="fa-stack fa-xl" style="margin-right: 15px;z-index: 99;" onclick="showDialog_info()">
                     <i class="far fa-circle fa-stack-1x" style="color: white;font-size: 1.5em;cursor: pointer;"></i>
                     <i class="fas fa-info fa-stack-1x fa-inverse" style="color: white;cursor: pointer;"></i>
-                </span>
+                </span> -->
                 <span class="fa-stack fa-xl" style="z-index: 99;">
-                    <i id="redo" class="fas fa-redo fa-rotate-60" style="color: white;cursor: pointer;"></i>
+                    <i id="redo" class="fas fa-redo fa-rotate-60" style="color: white;cursor: pointer;"
+                        onclick="window.location.reload()"></i>
                 </span>
                 <span class="fa-stack fa-xl" style="z-index: 99;">
                     <i class="fas fa-layer-group" style="color: white;cursor: pointer;" onclick="showDialog_map()"></i>
@@ -117,10 +118,7 @@
         </div>
         <!-- 下拉選單 -->
         <ul class="list-menu" style="display: none;z-index: 99;background-color: white;cursor: pointer;width: 100%;">
-
-            <!-- <div class="d-grid  w-100" style="z-index: 99;">
-                <button class="btn btn-primary border-0 w-100 navlist" type="button">Where my car !</button>
-            </div> -->
+<!-- 
             <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">繳費紀錄</button>
             </div>
@@ -128,10 +126,6 @@
             <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">付費車牌</button>
             </div>
-
-            <!-- <div class="d-grid  w-100" style="z-index: 99;">
-                <button class="btn btn-primary border-0 w-100 navlist" type="button">常用車位</button>
-            </div> -->
 
             <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">個人資訊</button>
@@ -144,24 +138,10 @@
             </div>
             <div class="d-grid  w-100" style="z-index: 99;">
                 <button class="btn btn-primary border-0 w-100 navlist" type="button">登出</button>
-            </div>
+            </div> -->
         </ul>
     </div>
     <!-- 覆蓋式視窗 -->
-    <!-- 車位類型 -->
-    <dialog id="Dialog_info">
-        <div class="dialog-header">
-            <h6 class="dialog-title">停車位類型</h6>
-            <i class="fas fa-times fa-xs close-icon" onclick="closeDialog_info()"></i>
-        </div>
-        <div class="dialog_info_content">
-            <br>
-            <img src="./assets/image/map_image/parking_type.svg" alt="">
-
-        </div>
-        <br>
-
-    </dialog>
     <!-- 地圖選擇 -->
     <dialog id="Dialog_map">
         <div class="dialog-header">
@@ -169,10 +149,10 @@
             <i class="fas fa-times fa-xs close-icon" onclick="closeDialog_map()"></i>
         </div>
         <div class="dialog_map_content">
-            <img id="car_parking_img" class="map_select" src="./assets/image/map_image/car_parking_select.jpg" alt=""
+            <img id="car_parking_img" class="map_select" src="./assets/image/map_image/car_parking.jpg" alt=""
+                style="cursor: pointer;" onclick="window.location.href = './mobile_v13.html';">
+            <img id="car_stay_img" class="map_select" src="./assets/image/map_image/car_stay_select.jpg" alt=""
                 style="cursor: pointer;" onclick="">
-            <img id="car_stay_img" class="map_select" src="./assets/image/map_image/car_stay.jpg" alt=""
-                style="cursor: pointer;" onclick="window.location.href = './Mobile_v1_carStay.html';">
         </div>
     </dialog>
 
@@ -215,146 +195,55 @@
         </button>
 
         <br>
-
-        <div id="parking_lot_item" class="accordion" id="accordion_map_list">
-            <div class="accordion-item" v-for="(parking_name, index) in parkingLot" :key="index">
+        <!-- 車宿選單 -->
+        <div id="parking_stay" class="accordion" id="accordion_map_list">
+            <div class="accordion-item" v-for="(stay_name, index) in datafromS" :key="index">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" v-on:click="toggleCollapse(parking_name.id)"
-                        :class="{'collapsed': activeCollapse !== parking_name.id }"
-                        :aria-expanded="activeCollapse === parking_name.id"
-                        :aria-controls="'collapse-' + parking_name.id">
+                    <button class="accordion-button" type="button" v-on:click="toggleCollapse(stay_name.sl_id)"
+                        :class="{'collapsed': activeCollapse !== stay_name.sl_id }"
+                        :aria-expanded="activeCollapse === stay_name.sl_id"
+                        :aria-controls="'collapse-' + stay_name.sl_id">
                         <div style="display: flex; flex-direction: column;">
-                            <p class="parking_position">{{ parking_name.Position }}</p>
+                            <p class="stay_position">{{stay_name.cs_name}}</p>
                         </div>
-                        <div class="special-group">
-                            <div id="ParkingTypeL" style="display: none;">{{parking_name.ParkingType}}</div>
-                            <img v-if="parking_name.Type.includes(2)" id="Parent_Child"
-                                src="./assets/image/map_image/Parent_Child.svg" style="margin: 2px;" alt="">
-                            <img v-if="parking_name.Type.includes(1)" id="handicapped"
-                                src="./assets/image/map_image/handicapped.svg" style="margin: 2px;" alt="">
-                            <img v-if=" 1-(parking_name.AvailableCar/parking_name.TotalCar) < 0.3"
-                                src="./assets/image/map_image/P-green.svg" style="margin: 2px;" alt="">
-                            <img v-else-if="  1-(parking_name.AvailableCar/parking_name.TotalCar) >= 0.3 && 1-(parking_name.AvailableCar/parking_name.TotalCar) <= 0.6"
-                                src="./assets/image/map_image/P-yellow.svg" style="margin: 2px;" alt="">
-                            <img v-else src="./assets/image/map_image/P-red.svg" style="margin: 2px;" alt="">
+                        <div class="service-group">
+                            <img v-if="stay_name.cs_toilet === '1'" id="toilet"
+                                src="./assets/image/map_image/toilet.png" style="margin: 2px;width: 35px;" alt="">
+                            <img v-if="stay_name.cs_water === '1'" id="hot_water"
+                                src="./assets/image/map_image/hotWater.png" style="margin: 2px;width: 35px" alt="">
                         </div>
                     </button>
                 </h2>
-                <div :id="'collapse-' + parking_name.id" class="accordion-collapse collapse"
-                    :class="{'show': activeCollapse === parking_name.id }"
-                    :aria-labelledby="'heading-' + parking_name.id" data-bs-parent="#accordion_map_list">
+                <div :id="'collapse-' + stay_name.sl_id" class="accordion-collapse collapse"
+                    :class="{'show': activeCollapse === stay_name.sl_id }"
+                    :aria-labelledby="'heading-' + stay_name.sl_id" data-bs-parent="#accordion_map_list">
                     <div class="accordion-body">
                         <div id="list_detail">
                             <div id="number" style="display: flex; flex-direction: row;">
-                                <p class="leftover">空車位：</p>
-                                <p class="leafover_num">{{ parking_name.AvailableCar }}</p>
-                                <p class="total_name">&nbsp;/&nbsp;總車位：</p>
-                                <p class="total_num">{{ parking_name.TotalCar }}</p>
+                                <p class="type_ti">類型：</p>
+                                <p class="type_de">{{stay_name.cs_type}}</p>
                             </div>
                             <div class="row">
-                                <div id="update_info" class="col-8">
-                                    <p class="up_time">更新時間：{{ parking_name.Updatetime }}</p>
+                                <div id="toilets" class="col-6" style="display: flex; flex-direction: row;">
+                                    <p class="toilet_ti">廁所提供：</p>
+                                    <p class="toilet_de">{{ stay_name.toilet === 1 ? '有' : '無' }}</p>
                                 </div>
-                                <div id="distance_info" class="col-4">
-                                    <p class="distance">{{ parking_name.distanceKM }}公里{{ parking_name.distanceM }}公尺
-                                    </p>
-                                    <p class="distance" style="display: none;">{{ parking_name.distance }}</p>
-                                    <p class="distance_time">{{ parking_name.travelTime }} 分鐘</p>
+                                <div id="hotw" class="col-6" style="display: flex; flex-direction: row;">
+                                    <p class="hotw_ti">熱水提供：</p>
+                                    <p class="hotw_de">{{stay_name.cs_water === 1 ? '有' : '無' }}</p>
                                 </div>
                             </div>
-                            <div id="lotX" style="display:none;">{{ parking_name.X }}</div>
-                            <div id="lotY" style="display:none;">{{ parking_name.Y }}</div>
+                            <div id="stayX" style="display:none;">{{ stay_name.cs_lng}}</div>
+                            <div id="stayY" style="display:none;">{{ stay_name.cs_lat}}</div>
 
                             <div id="btn_group">
-                                <img id="view_fee" class="btn" src="./assets/image/map_image/show_fee-btn.svg"
-                                    @click="showDialog_fee(parking_name.Notes)" alt="">
                                 <!-- <img id="like" class="btn" src="./assets/image/map_image/like_btn.svg" alt=""> -->
                                 <img id="go" class="btn" src="./assets/image/map_image/go_btn.svg"
-                                    @click="routing([parking_name.Y, parking_name.X])" alt="">
-                            </div>
-                            <div id="popular_time_graph" class="row">
-                                <p class="col-12">熱門時段</p>
-                                <img src="./assets/image/map_image/popular_time_graph.svg" alt="">
+                                    @click="routing([stay_name.cs_lat, stay_name.cs_lng])" alt="">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- 收費資訊 -->
-                <dialog :key="parking_name.id" id="Dialog_fee">
-                    <div class="dialog-header">
-                        <h6 class="dialog-title">收費方式</h6>
-                        <i class="fas fa-times fa-xs close-icon" @click="closeDialog_fee()"></i>
-                    </div>
-                    <div class="dialog_fee_content">
-                        <h6>{{dialog_fee_content}}</h6>
-                    </div>
-                </dialog>
-            </div>
-        </div>
-
-        <!-- 使用 v-for 指令，遍歷 parkingRoad 陣列中的資料，並動態生成 HTML 標籤 -->
-        <div id="parking_road_item" class="accordion" id="accordion_map_list">
-            <div class="accordion-item" v-for="(parking, index) in parkingRoad" :key="index">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" :class="{active: activeCollapse === index}"
-                        @click="toggleCollapse(index)">
-
-
-                        <button class="accordion-button" :class="{ collapsed: activeCollapse !== index }" type="button">
-                            <p class="parking_name">{{ parking.rdname }}</p>
-                            <p class="parking_subname"> ( {{ parking.se_road }} )</p>
-                            <div class="special-group">
-
-                                <div id="ParkingTypeR" style="display: none;">{{parking.ParkingType}}</div>
-                                <img v-if="parking.PS_type === '1'" id="handicapped"
-                                    src="./assets/image/map_image/handicapped.svg" style="margin: 2px;" alt="">
-                                <img v-if="parking.PS_type === '2'" id="Parent_Child"
-                                    src="./assets/image/map_image/Parent_Child.svg" style="margin: 2px;" alt="">
-                                <span v-if="parking.PS_type === '0'" style="margin: 2px;" alt="">&nbsp;</span>
-
-                                <img v-if="parking.status === '0'" id="status_light"
-                                    src="./assets/image/map_image/Vector_green.svg" style="margin: 4.2px;" alt="">
-                                <img v-else src="./assets/image/map_image/Vector_red.svg" style="margin: 4.2px;" alt="">
-                            </div>
-                        </button>
-                    </h2>
-                    <div :id="'collapse' + index" class="accordion-collapse collapse"
-                        :class="{show: activeCollapse === index}">
-                        <div class="accordion-body">
-                            <div id="load_addr">
-                                <p>車格編號：{{ parking.ceiiId }}</p>
-                            </div>
-                            <div class="row">
-                                <div id="update_info" class="col-8">
-                                    <p class="up_time">更新時間：{{ parking.Updatetime }}</p>
-                                </div>
-                                <div id="distance_info" class="col-4">
-                                    <p class="distance">{{ parking.distanceKM }}公里{{ parking.distanceM }}公尺</p>
-                                    <p class="distance" style="display: none;">{{ parking.distance }}</p>
-                                    <p class="distance_time">{{ parking.travelTime }}分鐘</p>
-                                </div>
-                            </div>
-                            <div id="roadX" style="display:none;">{{ parking.TWD97_X }}</div>
-                            <div id="roadY" style="display:none;">{{ parking.TWD97_Y }}</div>
-
-                            <img id="view_fee" class="btn" src="./assets/image/map_image/show_fee-btn.svg"
-                                @click="showDialog_roadfee(parking.paycash)" alt="">
-                            <!-- <img id="like" class="btn" src="./assets/image/map_image/like_btn.svg" alt=""> -->
-                            <img id="go" class="btn" src="./assets/image/map_image/go_btn.svg"
-                                @click="routingTest([parking.TWD97_Y, parking.TWD97_X])" alt="">
-                        </div>
-                    </div>
-                </div>
-                <!-- 收費資訊 -->
-                <dialog :key="parking.id" id="Dialog_road_fee">
-                    <div class="dialog-header">
-                        <h6 class="dialog-title">收費方式</h6>
-                        <i class="fas fa-times fa-xs close-icon" @click="closeDialog_roadfee()"></i>
-                    </div>
-                    <div class="dialog_fee_content">
-                        <h6>{{dialog_roadfee_content}}</h6>
-                    </div>
-                </dialog>
             </div>
         </div>
         <br><br><br><br><br><br><br><br><br><br>
@@ -419,7 +308,15 @@
                 類型：${parkDct['cs_type']}
                 ${parkDct['cs_water'] == 1 ? '<img src="./assets/image/map_image/hotWater.png" style="margin: 2px;width: 35px" alt="">' : ''}
                 ${parkDct['cs_toilet'] == 1 ? '<img src="./assets/image/map_image/toilet.png" style="margin: 2px;width: 35px" alt="">' : ''}<br>
+                <button onclick="routing(${parkDct['cs_lat']}, ${parkDct['cs_lng']})">開始導航</button>
             `)
+        }
+
+        // 導航
+        function routing(y, x) {
+            // 導向google導航網頁
+            var url = 'https://www.google.com/maps/dir/?api=1&destination=' + y + ',' + x;
+            window.open(url);
         }
 
 
@@ -434,65 +331,67 @@
             // marker: searchPlace,
         });
         map.addControl(search);
+        function fetchData() {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: "http://localhost:3000/select/carstay/",
+                    type: "GET"
+                }).done(function (x) {
+                    const datafromS = JSON.parse(x);
+                    resolve(datafromS);
+                    $(datafromS).each(function (index, carStayData) {
+                        switch (carStayData['cs_type']) {
+                            case '棧點':
+                                if (carStayData['cs_toilet'] == '1') {
+                                    var restToilet = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: rest }).addTo(map);
+                                    inputInfo(carStayData, restToilet);
+                                    parkingClass(restToilet, 'restToilet');
+                                } else if (carStayData['cs_water'] == '1') {
+                                    var restWater = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: rest }).addTo(map);
+                                    inputInfo(carStayData, restWater);
+                                    parkingClass(restWater, 'restWater');
+                                } else {
+                                    var restNon = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: rest }).addTo(map);
+                                    inputInfo(carStayData, restNon);
+                                    parkingClass(restNon, 'restNon');
+                                }
+                                break;
 
-        $.ajax({
-            url: "http://localhost:3000/select/carstay/",
-            type: "GET"
-        }).done(function (x) {
-            var datafromS = JSON.parse(x);
-            $(datafromS).each(function (index, carStayData) {
-                console.log(carStayData)
-                switch (carStayData['cs_type']) {
-                    case '棧點':
-                        if (carStayData['cs_toilet'] == '1') {
-                            var restToilet = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: rest }).addTo(map);
-                            inputInfo(carStayData, restToilet);
-                            parkingClass(restToilet, 'restToilet');
-                        } else if (carStayData['cs_water'] == '1') {
-                            var restWater = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: rest }).addTo(map);
-                            inputInfo(carStayData, restWater);
-                            parkingClass(restWater, 'restWater');
-                        } else {
-                            var restNon = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: rest }).addTo(map);
-                            inputInfo(carStayData, restNon);
-                            parkingClass(restNon, 'restNon');
+                            case '泊點':
+                                if (carStayData['cs_toilet'] == '1') {
+                                    var sleepToilet = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: sleep }).addTo(map);
+                                    inputInfo(carStayData, sleepToilet);
+                                    parkingClass(sleepToilet, 'sleepToilet');
+                                } else if (carStayData['cs_water'] == '1') {
+                                    var sleepWater = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: sleep }).addTo(map);
+                                    inputInfo(carStayData, sleepWater);
+                                    parkingClass(sleepWater, 'sleepWater');
+                                } else {
+                                    var sleepNon = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: sleep }).addTo(map);
+                                    inputInfo(carStayData, sleepNon);
+                                    parkingClass(sleepNon, 'sleepNon');
+                                }
+                                break;
+                            default:
+                                if (carStayData['cs_toilet'] == '1') {
+                                    var campingToilet = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: camping }).addTo(map);
+                                    inputInfo(carStayData, campingToilet);
+                                    parkingClass(campingToilet, 'campingToilet');
+                                } else if (carStayData['cs_water'] == '1') {
+                                    var campingWater = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: camping }).addTo(map);
+                                    inputInfo(carStayData, campingWater);
+                                    parkingClass(campingWater, 'campingWater');
+                                } else {
+                                    var campingNon = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: camping }).addTo(map);
+                                    inputInfo(carStayData, campingNon);
+                                    parkingClass(campingNon, 'campingNon');
+                                }
+                                break;
                         }
-                        break;
-
-                    case '泊點':
-                        if (carStayData['cs_toilet'] == '1') {
-                            var sleepToilet = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: sleep }).addTo(map);
-                            inputInfo(carStayData, sleepToilet);
-                            parkingClass(sleepToilet, 'sleepToilet');
-                        } else if (carStayData['cs_water'] == '1') {
-                            var sleepWater = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: sleep }).addTo(map);
-                            inputInfo(carStayData, sleepWater);
-                            parkingClass(sleepWater, 'sleepWater');
-                        } else {
-                            var sleepNon = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: sleep }).addTo(map);
-                            inputInfo(carStayData, sleepNon);
-                            parkingClass(sleepNon, 'sleepNon');
-                        }
-                        break;
-                    default:
-                        if (carStayData['cs_toilet'] == '1') {
-                            var campingToilet = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: camping }).addTo(map);
-                            inputInfo(carStayData, campingToilet);
-                            parkingClass(campingToilet, 'campingToilet');
-                        } else if (carStayData['cs_water'] == '1') {
-                            var campingWater = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: camping }).addTo(map);
-                            inputInfo(carStayData, campingWater);
-                            parkingClass(campingWater, 'campingWater');
-                        } else {
-                            var campingNon = L.marker([carStayData['cs_lat'], carStayData['cs_lng']], { icon: camping }).addTo(map);
-                            inputInfo(carStayData, campingNon);
-                            parkingClass(campingNon, 'campingNon');
-                        }
-                        break;
-                }
+                    })
+                })
             })
-        })
-
+        }
 
 
         let usermarker, userZoomed, userlat, userlng, searchlat, searchlng, searchmarker;
@@ -809,83 +708,6 @@
             }
         })
 
-
-        // function refrash_road(cur_area) {
-        //     // console.log(cur_area);
-        //     $('.roadOkDisabled').remove();
-        //     $('.roadNonDisabled').remove();
-        //     $('.roadOkParents').remove();
-        //     $('.roadNonParents').remove();
-        //     $('.roadOkNormal').remove();
-        //     $('.roadNonNormal').remove();
-        //     let a = 0;
-        //     a = cur_area;
-        //     let car_parking_url = "https://datacenter.taichung.gov.tw/Swagger/OpenData/791a8a4b-ade6-48cf-b3ed-6c594e58a1f1";
-        //     let car_parking_xhr = new XMLHttpRequest();
-        //     car_parking_xhr.open('GET', car_parking_url, true);
-        //     car_parking_xhr.send();
-        //     car_parking_xhr.onreadystatechange = function () {
-        //         if (this.readyState === 4 && this.status === 200) {
-        //             response = JSON.parse(this.response);
-        //             // console.log(response);
-        //             $(response).each(function (i, parkInfo) {
-        //                 var roadlat = Number(parkInfo['PS_Lat']);
-        //                 var roadlng = Number(parkInfo['PS_Lng']);
-        //                 switch (parkInfo['PS_type']) {
-        //                     case '1':
-        //                         if (L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)) < a) {
-        //                             if (parkInfo['status'] == 0) {
-        //                                 targetPoint.push([roadlat, roadlng]);
-        //                                 targetDis.push(L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)));
-        //                                 var markerOK = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk }).addTo(map);
-        //                                 parkingClass(markerOK, 'roadOkDisabled');
-        //                             } else {
-        //                                 var markerNon = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon }).addTo(map);
-        //                                 parkingClass(markerNon, 'roadNonDisabled');
-        //                             }
-        //                         }
-        //                         break;
-        //                     case '2':
-        //                         if (L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)) < a) {
-        //                             if (parkInfo['status'] == 0) {
-        //                                 targetPoint.push([roadlat, roadlng]);
-        //                                 targetDis.push(L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)))
-        //                                 var markerOK = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk }).addTo(map);
-        //                                 parkingClass(markerOK, 'roadOkParents');
-        //                             } else {
-        //                                 var markerNon = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon }).addTo(map);
-        //                                 parkingClass(markerNon, 'roadNonParents');
-        //                             }
-        //                         }
-        //                         break;
-        //                     default:
-        //                         if (L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)) < a) {
-        //                             if (parkInfo['status'] == 0) {
-        //                                 targetPoint.push([roadlat, roadlng]);
-        //                                 targetDis.push(L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)))
-        //                                 var markerOK = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk }).addTo(map);
-        //                                 parkingClass(markerOK, 'roadOkNormal');
-        //                             } else {
-        //                                 var markerNon = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon }).addTo(map);
-        //                                 parkingClass(markerNon, 'roadNonNormal');
-        //                             }
-        //                         }
-        //                         break;
-        //                 }
-        //                 // if (L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)) < a) {
-        //                 //     if (parkInfo['status'] == 0) {
-        //                 //         var markerOK = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk }).addTo(map);
-        //                 //         parkingClass(markerOK, 'road_ok');
-        //                 //     } else {
-        //                 //         var markerNon = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon }).addTo(map);
-        //                 //         parkingClass(markerNon, 'road_non');
-        //                 //     }
-        //                 // }
-        //             })
-        //         };
-        //     }
-        // }
-
     </script>
 
     <script>
@@ -961,13 +783,13 @@
 
 
         // 控制對話框
-        function showDialog_info() {
-            document.getElementById("Dialog_info").showModal();
-        }
+        // function showDialog_info() {
+        //     document.getElementById("Dialog_info").showModal();
+        // }
 
-        function closeDialog_info() {
-            document.getElementById("Dialog_info").close();
-        }
+        // function closeDialog_info() {
+        //     document.getElementById("Dialog_info").close();
+        // }
 
         function showDialog_map() {
             document.getElementById("Dialog_map").showModal();
@@ -1009,7 +831,7 @@
         redo.addEventListener('click', () => {
             // 顯示訊息
             const message = document.createElement('div');
-            message.innerText = '已更新清單資訊';
+            message.innerText = '更新頁面';
             message.style.position = 'fixed';
             message.style.top = '50%';
             message.style.left = '50%';
@@ -1027,107 +849,28 @@
             }, 700);
         });
 
-
-        // 加入最愛的提示訊息
-        const likeBtns = document.querySelectorAll('#like');
-        likeBtns.forEach(likeBtn => {
-            likeBtn.addEventListener('click', () => {
-                // 顯示訊息
-                const message = document.createElement('div');
-                message.innerText = '已加到最愛清單';
-                message.style.position = 'fixed';
-                message.style.top = '50%';
-                message.style.left = '50%';
-                message.style.transform = 'translate(-50%, -50%)';
-                message.style.padding = '10px 20px';
-                message.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-                message.style.color = '#fff';
-                message.style.borderRadius = '5px';
-                message.style.zIndex = 9999;
-                document.body.appendChild(message);
-
-                // 關閉訊息
-                setTimeout(() => {
-                    message.remove();
-                }, 700);
-            });
-        });
     </script>
+
     <script>
 
-        // 取得台中停車場資訊
-        let taichung_parking_url = "https://motoretag.taichung.gov.tw/DataAPI/api/ParkingSpotListAPI";
-        let taichung_parking_xhr = new XMLHttpRequest();
-
-
-        // 定義 parkingLot 陣列在全域範圍
-        const parkingLot = [];
-
-        //台中停車場資訊
-        function fetchParkingData(url) {
-            return fetch(url)
-                .then(response => response.json())
-                .then(parking_data => {
-                    const parkingLot_info = {};
-                    parking_data.forEach(parking => {
-                        parking.ParkingLots.forEach(lot => {
-                            if (lot.AvailableCar >= 0 && lot.Position != null) {
-                                let distance = parseInt(L.latLng(userlat, userlng).distanceTo(L.latLng(lot.Y, lot.X)));
-                                let travTime = parseInt(distance / 30000 * 60);
-                                parkingLot_info[lot.ID] = {
-                                    id: lot.ID,
-                                    Position: lot.Position,
-                                    X: lot.X,
-                                    Y: lot.Y,
-                                    AvailableCar: lot.AvailableCar,
-                                    TotalCar: lot.TotalCar,
-                                    Type: lot.Type,
-                                    Notes: lot.Notes,
-                                    "ParkingType": 'ParkingLot',
-                                    Updatetime: lot.Updatetime,
-                                    distance: distance,
-                                    distanceKM: parseInt(distance / 1000),
-                                    distanceM: distance - (1000 * parseInt(distance / 1000)),
-                                    travelTime: travTime
-                                };
-                            }
-                        });
-                    });
-                    // 在這裡將 parkingLot_info 賦值給全域範圍的 parkingLot 陣列
-                    for (let key in parkingLot_info) {
-                        parkingLot.push(parkingLot_info[key]);
-                    }
-                })
-                .catch(error => console.error(error));
-        }
-
-        // 在需要時呼叫fetchParkingData函數
-        fetchParkingData(taichung_parking_url)
-            .then(() => {
-                var parkingLotVue = new Vue({
-                    el: '#parking_lot_item',
+        fetchData()
+            .then((datafromS) => {
+                var carstayVue = new Vue({
+                    el: '#parking_stay',
                     data: {
-                        parkingLot,
-                        activeCollapse: null, // 當前展開的折疊區塊ID
-                        dialog_fee_content: "" // 對話框內容
+                        datafromS,
+                        activeCollapse: null
                     },
                     methods: {
-                        toggleCollapse: function (id) {
+                        toggleCollapse: function (sl_id) {
                             // 如果點擊的是已經展開的選項，則關閉它
-                            if (this.activeCollapse === id) {
+                            if (this.activeCollapse === sl_id) {
                                 this.activeCollapse = null;
                             }
                             // 如果點擊的是折疊的選項，則展開它
                             else {
-                                this.activeCollapse = id;
+                                this.activeCollapse = sl_id;
                             }
-                        },
-                        showDialog_fee(notes) {
-                            this.dialog_fee_content = notes;
-                            document.getElementById("Dialog_fee").showModal();
-                        },
-                        closeDialog_fee() {
-                            document.getElementById("Dialog_fee").close();
                         },
                         // 導航功能
                         routing(routeLatLng) {
@@ -1137,149 +880,97 @@
                         }
                     }
                 })
-                // 在這裡使用parkingLot
-                // console.log(parkingLot);
-            })
-            .then(() => {
-                // 在選單改變時觸發事件
-                document.getElementById("special_select").addEventListener("change", function () {
-                    var selectedValue = this.value; // 取得目前選擇的值
-                    var parkingItems = document.querySelectorAll("#parking_lot_item .accordion-item"); // 取得所有停車場項目
+                console.log(datafromS);
+                // 停車場篩選用程式碼
+                var stay_type_select = document.getElementById("car_stay_type");
+                var service_select = document.getElementById("service");
 
-                    // 依據選擇的值顯示相對應的停車場項目
-                    for (var i = 0; i < parkingItems.length; i++) {
-                        var parkingItem = parkingItems[i];
-                        var parkingName = parkingItem.querySelector(".parking_position").textContent;
-                        var parkingType = parkingLot.find(function (item) { return item.Position === parkingName; }).Type;
 
-                        // 顯示所有停車場
-                        if (selectedValue === "non_special") {
-                            parkingItem.style.display = "block";
-                        }
-                        // 顯示身障車位
-                        else if (selectedValue === "disabled" && parkingType.includes(1)) {
-                            parkingItem.style.display = "block";
-                        }
-                        // 顯示親子車位
-                        else if (selectedValue === "parent" && parkingType.includes(2)) {
-                            parkingItem.style.display = "block";
-                        }
-                        // 隱藏其它類型的停車場
-                        else {
-                            parkingItem.style.display = "none";
-                        }
-                    }
-                });
-            })
+                stay_type_select.addEventListener("change", filterStayItems);
+                service_select.addEventListener("change", filterStayItems);
 
-        // --------------------------------------------------------------
+                function filterStayItems() {
+                    var stayItems = document.querySelectorAll("#parking_stay .accordion-item");
+                    var typeValue = stay_type_select.value;
+                    var serviceValue = service_select.value;
 
-        //台中路邊停車格資訊 --v2
-
-        // 定義 parkingRoad 陣列在全域範圍
-        const parkingRoad = [];
-        const now = new Date();
-        now.setHours(now.getHours() + 8);
-
-        // 創建一個函數，用於從 CSV 字串中解析 JSON 物件
-        function parseTaichungRoadInfo(csvString) {
-            return csvString.split('\r\n').map(row => {
-                let distance, travTime
-                const values = row.split(',');
-                if (values[10] !== undefined) {
-                    distance = parseInt(L.latLng(userlat, userlng).distanceTo(L.latLng(values[10], values[9])));
-                    travTime = parseInt(distance / 30000 * 60);
-                } else {
-                    distance = null;
-                    travTime = null;
-                }
-                return {
-                    id: values[0],
-                    road_id: values[2],
-                    rdname: values[3],
-                    se_road: values[4],
-                    ceiiId: values[5],
-                    paycash: values[7],
-                    PS_type: values[8],
-                    TWD97_X: values[9],
-                    TWD97_Y: values[10],
-                    status: values[11],
-                    distance: distance,
-                    distanceKM: parseInt(distance / 1000),
-                    distanceM: distance - (1000 * parseInt(distance / 1000)),
-                    travelTime: travTime,
-                    "ParkingType": 'ParkingRoad',
-                    Updatetime: now.toISOString().replace('T', ' ').substr(0, 19)
-                };
-            });
-        }
-
-        // 調用 parseTaichungRoadInfo 函數來解析 CSV 字串並取得我們需要的屬性
-        fetch('./assets/image/map_image/taichung_road_info/taichung_road_parking_info.csv')
-            .then(response => response.text())
-            .then(csvString => {
-                const taichung_road_info = parseTaichungRoadInfo(csvString);
-                for (let i = 0; i < 100; i++) { //taichung_road_info.length
-                    parkingRoad.push(taichung_road_info[i]);
-                }
-
-                var parkingRoadVue = new Vue({
-                    el: '#parking_road_item',
-                    data: {
-                        parkingRoad,
-                        activeCollapse: null,
-                        dialog_roadfee_content: "" // 對話框內容
-                    },
-                    methods: {
-                        toggleCollapse: function (id) {
-                            // 如果點擊的是已經展開的選項，則關閉它
-                            if (this.activeCollapse === id) {
-                                this.activeCollapse = null;
-                            }
-                            // 如果點擊的是折疊的選項，則展開它
-                            else {
-                                this.activeCollapse = id;
-                            }
-                        },
-                        showDialog_roadfee(paycash) {
-                            this.dialog_roadfee_content = paycash;
-                            document.getElementById("Dialog_road_fee").showModal();
-                        },
-                        closeDialog_roadfee() {
-                            document.getElementById("Dialog_road_fee").close();
-                        }
-                    }
-                })
-
-                // console.log(parkingRoad);
-                // 在這裡使用 parkingRoad
-            })
-            .catch(error => console.error(error))
-
-            .then(() => {
-                const specialSelect = document.getElementById("special_select");
-                specialSelect.addEventListener("change", filterSpecial);
-
-                function filterSpecial() {
-                    const parkingItemsS = document.querySelectorAll("#parking_road_item .accordion-item");
-                    const valueS = specialSelect.value;
-
-                    parkingItemsS.forEach(item => {
-                        const parking = item.querySelector(".parking_name");
-
-                        if (valueS === "disabled" && item.querySelector("#handicapped") === null) {
-                            item.style.display = "none";
-                        } else if (valueS === "parent" && item.querySelector("#Parent_Child") === null) {
-                            item.style.display = "none";
-                        } else {
+                    stayItems.forEach(item => {
+                        var stayName = item.querySelector(".stay_position");
+                        if ((typeValue === "non_type"
+                            || typeValue === "mooring_point" && item.querySelector(".type_de").textContent == '泊點'
+                            || typeValue === "stockroom" && item.querySelector(".type_de").textContent == '棧點'
+                            || typeValue === "camping" && item.querySelector(".type_de").textContent.includes('露營區')
+                        )
+                            && (serviceValue === "non_parking_type"
+                                || serviceValue === "toilet" && item.querySelector("#toilet") !== null
+                                || serviceValue === "hot_water" && item.querySelector("#hot_water") !== null
+                            )
+                        ) {
                             item.style.display = "block";
+                        } else {
+                            item.style.display = "none";
                         }
                     });
+
+
+
                 }
             })
 
+    </script>
+    <script>
+        // 假設 memberID 存在於 localStorage 中
+        var memberID = localStorage.getItem('memberID');
+        var memberAc = localStorage.getItem('member_ac');
+
+        var loginHtml = `
+                <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">繳費紀錄</button>
+            </div>
+
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">付費車牌</button>
+            </div>
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">個人資訊</button>
+            </div>
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">付款方式</button>
+            </div>
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist" type="button">通知中心</button>
+            </div>
+            <div id="logIO" class="d-grid  w-100" style="z-index: 99;">
+                <button class="btn btn-primary border-0 w-100 navlist clearLocalStroage" type="button">登出</button>
+            </div>
+        `;
 
 
+    
+
+        var SignOutHtml = `   
+        <div class="d-grid  w-100" style="z-index: 99;">
+            
+            <div class="d-grid  w-100" style="z-index: 99;">
+                <a class="btn btn-primary border-0 w-100 navlist" type="button" href="register.html">註冊</a>
+            </div>
+            <div id="logIO" class="d-grid  w-100" style="z-index: 99;">
+                <a class="btn btn-primary border-0 w-100 navlist" type="button" href="login.html">登入</a>
+            </div>
+        `
+        if (memberID) {
+            // 若 memberID 存在，表示已登入，顯示登出標籤，隱藏登入標籤
+            $('.list-menu').html(loginHtml);
+        } else {
+            // 若 memberID 不存在，表示未登入，顯示登入標籤，隱藏登出標籤
+            $('.list-menu').html(SignOutHtml);
+        }
+
+        $('.clearLocalStroage').on('click', function () {
+            localStorage.removeItem('memberID');
+        });
+
+       
     </script>
 </body>
 

@@ -134,7 +134,7 @@
                     <div class="col-6" style="padding-left: 80px; padding-top: 30px;">
                         <div class="row ">
                             <div class="col-12">
-                                <img style="width:130px;float: right;" src="./assets/image/Gold_Flow_image/pay-20.png"
+                                <img style="width:130px;float: right;" src="./assets/image/Gold_Flow_image/pay-22.png"
                                     alt="">
                             </div>
                             <div style="position: relative; top: -35px;">
@@ -151,7 +151,7 @@
                         <div class="row">
                             <div class="col-12 mb-2">
                                     <button class="license_update border_none">
-                                        <img style="float: left; width:130px;" src="./assets/image/Gold_Flow_image/pay-21.png"
+                                        <img style="float: left; width:130px;" src="./assets/image/Gold_Flow_image/pay-20.png"
                                         alt="">
                                     </button>
                             </div>
@@ -206,13 +206,21 @@
             </div>
         </div>
     </div>
+    <script>
+        var member_ac =  localStorage.getItem("member_ac")  
+        if(!member_ac){
+            window.location = "/Parking_PROJECT_client/login.html"
+        }
+    </script>
 
     <script>
+        var id =  localStorage.getItem("memberID")  
+        console.log(id)
             // Car Parking 帳戶 
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/select/member",
-            data:{id:1}
+            data:{id}
         }).done(
             function (e) {
                 var dataServer = JSON.parse(e);
@@ -226,7 +234,7 @@
             }
         )
 
-        var url = `http://localhost:3000/select/license/1`;
+        var url = `http://localhost:3000/select/license/${id}`;
         $.get(url, function (license) {
             $.each(JSON.parse(license), function (index, value) {
                 // console.log(value.license)

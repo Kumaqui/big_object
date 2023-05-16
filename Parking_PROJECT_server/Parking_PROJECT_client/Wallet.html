@@ -308,23 +308,29 @@
 
         </div>
     </div>
-    
-
-   
 
 
 
+
+
+    <script>
+        var member_ac =  localStorage.getItem("member_ac")  
+        if(!member_ac){
+            window.location = "/Parking_PROJECT_client/login.html"
+        }
+    </script>
     <script>
         // 返回金流主頁
         $(".G_F_H").on("click", function () {
             window.location = "http://localhost:3000/Parking_PROJECT_client/Gold_flow_home.html"
         })
-
+        var id = localStorage.getItem("memberID")
+        console.log(id)
         // 會員帳號 金額 資料庫select
         $.ajax({
             url: "http://localhost:3000/select/member",
             type: "post",
-            data: { id: 1 }
+            data: { id }
         }).done(
             function (e) {
                 var dataServer = JSON.parse(e);
@@ -342,24 +348,11 @@
         $(".withdrawal").on("click", function () {
             window.location = "/Parking_PROJECT_client/Withdrawal_value.html"
         })
-        sessionStorage.setItem('member_id', '1')
-        var memberid = sessionStorage.getItem('member_id')
-       
-        function refreshData() {
-            var memberid = sessionStorage.getItem('member_id')
-            $.ajax({
-                url: `http://localhost:3000/select/member`,
-                type: "post",
-                data: { id: memberid }
-            }).done(function (x) {
-                var datafromS = JSON.parse(x);
-                $("#memberid").text("會員帳號 " + datafromS[0].member_ac).css("font-weight", "bold")
-                $("#money").text(datafromS[0].member_money)
 
-            })
+        function refreshData() {
             $('#traderecord_data').empty()
             $.ajax({
-                url: `http://localhost:3000/select/traderecord/${memberid}`,
+                url: `http://localhost:3000/select/traderecord/${id}`,
                 type: "GET"
             }).done(function (x) {
                 var traderecord = JSON.parse(x)
@@ -390,7 +383,7 @@
         }
 
         refreshData()
-       
+
 
         $(".back_btn").on("click", function () {
             window.location = "/Parking_PROJECT_client/Gold_flow_home.html"

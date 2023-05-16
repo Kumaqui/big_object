@@ -191,31 +191,33 @@
         var td = date.getDate();
         var th = date.getHours();
         var tmin = date.getMinutes();
-        if(tm.toString.length == 1){
+        if (tm.toString.length == 1) {
             tm = "0" + tm;
         }
-        td = td < 10? "0"+td : td;
-        th = th < 10? "0"+th :th;
-        tmin = tmin < 10? "0"+tmin :tmin;
+        td = td < 10 ? "0" + td : td;
+        th = th < 10 ? "0" + th : th;
+        tmin = tmin < 10 ? "0" + tmin : tmin;
 
         $("#date").append(`${date.getFullYear()} / ${tm} / ${td}`)
         $("#time").append(` ${th} : ${tmin}`)
         var s = sessionStorage.getItem("payment");
-        $("#payment").append(`$${s}`).css("font-weight","bolder")
+        $("#payment").append(`$${s}`).css("font-weight", "bolder")
 
-        $("#member_money").on("click", function(){
+        var id = localStorage.getItem("memberID")
+        console.log(id)
+        $("#member_money").on("click", function () {
             // console.log("123")
             $.ajax({
                 type: "PUT",
                 url: 'http://localhost:3000/update/membermoney',
-                data : {
-                    id : 1,
-                    money : -s
+                data: {
+                    id: id,
+                    money: -s
                 }
             })
             window.location = "/Parking_PROJECT_client//Payment.html"
         })
-        
+
     </script>
 </body>
 

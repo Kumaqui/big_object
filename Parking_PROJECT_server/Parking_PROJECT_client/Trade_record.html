@@ -126,10 +126,14 @@
 
     </div>
 
-
     <script>
-        sessionStorage.setItem('member_id', '1')
-        var memberid = sessionStorage.getItem('member_id')
+        var member_ac = localStorage.getItem("member_ac")
+        if (!member_ac) {
+            window.location = "/Parking_PROJECT_client/login.html"
+        }
+    </script>
+    <script>
+        var id = localStorage.getItem("memberID")
         // modal區
         var modal = document.getElementsByClassName("date_modal")
         $('#typeChoose .container .date1_btn').on('click', function () {
@@ -189,20 +193,20 @@
 
 
         function refreshData() {
-            var memberid = sessionStorage.getItem('member_id')
+
             $.ajax({
                 url: `http://localhost:3000/select/member`,
                 type: "post",
-                data: { id: memberid }
+                data: { id }
             }).done(function (x) {
                 var datafromS = JSON.parse(x);
-                $("#memberid").text("會員帳號 " + datafromS[0].member_ac).css("font-weight","bold")
+                $("#memberid").text("會員帳號 " + datafromS[0].member_ac).css("font-weight", "bold")
                 $("#money").text(datafromS[0].member_money)
 
             })
             $('#traderecord_data').empty()
             $.ajax({
-                url: `http://localhost:3000/select/traderecord/${memberid}`,
+                url: `http://localhost:3000/select/traderecord/${id}`,
                 type: "GET"
             }).done(function (x) {
                 var traderecord = JSON.parse(x)
@@ -290,7 +294,7 @@
 
         }
 
-        $(".back_btn").on("click", function(){
+        $(".back_btn").on("click", function () {
             window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
         })
     </script>

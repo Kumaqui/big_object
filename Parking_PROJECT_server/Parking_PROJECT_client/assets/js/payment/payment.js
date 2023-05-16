@@ -1,3 +1,7 @@
+var member_ac =  localStorage.getItem("member_ac")  
+if(!member_ac){
+    window.location = "/Parking_PROJECT_client/login.html"
+}
 const reloadBtn = document.getElementById("payment");
 const loader = document.getElementById("loader");
 const loader_text = document.getElementById("loader_text");
@@ -277,9 +281,9 @@ function cat(a) {
     })
 }
 // 得到車牌資料
-// var id = sessionStorage.getItem("id")
-// var url = `http://localhost:3000/select/license/${id}`;
-var url = `http://localhost:3000/select/license/1`;
+var id =  localStorage.getItem("memberID")  
+console.log(id)
+var url = `http://localhost:3000/select/license/${id}`;
 $.get(url, function (license) {
     $.each(JSON.parse(license), function (index, value) {
         // console.log(value.license)
@@ -302,12 +306,13 @@ $.get(url, function (license) {
 
 })
 // 得到錢包餘額資料
-// var id = sessionStorage.getItem("id")
-// var url = `http://localhost:3000/select/member/${id}`;
+var id =  localStorage.getItem("memberID")  
+console.log(id)
+
 $.ajax({
     url: `http://localhost:3000/select/member`,
     type: "post",
-    data:{id:1}
+    data:{id}
   }).done(function (wallet) {      
     $.each(JSON.parse(wallet), function (index, value) {
         // console.log(value)
@@ -337,7 +342,7 @@ $("#payment_sure").on("click", function () {
     $.ajax({
         url: `http://localhost:3000/select/member`,
         type: "post",
-        data:{id:1}
+        data:{id}
       }).done(function (wallet) {      
         $.each(JSON.parse(wallet), function (index, value) {
             var x = value.member_money
@@ -360,7 +365,7 @@ $("#payment_sure").on("click", function () {
                             type: 'POST',
                             url: 'http://localhost:3000/insert/traderecord',
                             data: {
-                                id: 1,
+                                id: id,
                                 amount: test[i].innerText,
                                 date: `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`,
                                 time: `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`,

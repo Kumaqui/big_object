@@ -83,7 +83,7 @@
                 <hr>
                 <div class="col-12" style="padding-top: 40px;">
                     <button id="OK"
-                        style="background-color: #0069B4;color: white; width:100%; line-height:80px; border-radius: 20px; " >
+                        style="background-color: #0069B4;color: white; width:100%; line-height:80px; border-radius: 20px; ">
                         <h1>完成</h1>
                     </button>
                 </div>
@@ -98,19 +98,27 @@
 
     </div>
     <script>
-        $('#OK').on('click',function(){
+        var member_ac =  localStorage.getItem("member_ac")  
+        if(!member_ac){
+            window.location = "/Parking_PROJECT_client/login.html"
+        }
+    </script>
+    <script>
+        var id = localStorage.getItem("memberID")
+        console.log(id)
+        $('#OK').on('click', function () {
             $.ajax({
                 type: 'POST',
                 url: 'http://localhost:3000/insert/license',
                 data: {
-                    id:1,
+                    id:id,
                     license: $("#license").val()
                 }
-            }).done(function(){
+            }).done(function () {
                 window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
-            }) 
+            })
         })
-        $(".back_btn").on("click", function(){
+        $(".back_btn").on("click", function () {
             window.location = "/Parking_PROJECT_client/Gold_flow_home.html"
         })
     </script>
