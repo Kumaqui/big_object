@@ -232,10 +232,10 @@ function cat(a) {
                                             </h4>
                                         </div>
                                         <div class="col-12 mt-2 dis_flex_center">
-                                            <h3 class="test">
+                                            <h2 class="test">
                                             ${dataServer[i].py_amount}
-                                            </h3>
-                                            <h3>元</h3>
+                                            </h2>
+                                            <h3 class="mt-1">元</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -316,7 +316,7 @@ $.ajax({
 }).done(function (wallet) {
     $.each(JSON.parse(wallet), function (index, value) {
         // console.log(value)
-        $("#wallet").text(value.member_money)
+        $("#wallet").text(value.member_money).css("font-weight", "bold")
         // `<option>${value} </option>`
     })
 })

@@ -128,11 +128,11 @@ p {
 }
 
 .color_gary {
-    color: rgb(150, 150, 150);
+    color: rgb(126, 123, 123)
 }
 
 .border_gray {
-    border: 1px rgb(150, 150, 150) solid;
+    border: 1px rgb(126, 123, 123) solid;
 }
 
 .dis_flex_column_center {

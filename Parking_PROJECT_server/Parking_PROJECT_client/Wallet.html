@@ -153,11 +153,11 @@
         }
 
         .color_gary {
-            color: rgb(150, 150, 150);
+            color: rgb(126, 123, 123)
         }
 
         .border_gray {
-            border: 1px rgb(150, 150, 150) solid;
+            border: 1px  rgb(126, 123, 123) solid;
         }
 
         .dis_flex_column_center {
@@ -255,14 +255,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 mt-3 dis_flex_center">
-                    <h4 class="ac"><b></b> </h4>
+                    <h3 class="ac"><b></b> </h3>
                 </div>
                 <div class="dis_flex_center pt-2" >
                     <div class="me-2">
                         <h4 ><b>TWD</b> </h4>
                     </div>
                     <div>
-                        <h3 class="money "> <b> </b></h3>
+                        <h2 class="money "> <b> </b></h2>
                     </div>
                 </div>
             </div>
@@ -304,7 +304,7 @@
     </div>
     <hr>
     <div class="bg_white ">
-        <div id="traderecord_data" class="container pt-5">
+        <div id="traderecord_data" class="container pt-4">
 
         </div>
     </div>
@@ -368,11 +368,11 @@
                         <div class="col-16 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
                             <div class="col-6" style="text-align: left;">
                                 <h4>${traderecord[i].tr_counterparty}</h4>
-                                <p style="color: gray;">Carparking${type}</p>
-                                <p style="color: gray">${traderecord[i].tr_date} ${traderecord[i].tr_time}</p>
+                                <h6 class="color_gary">Carparking${type}</h6>
+                                <h6 style="color: gray">${traderecord[i].tr_date} ${traderecord[i].tr_time}</h6>
                             </div>
                             <div class="col-6" style="text-align: right;">
-                                <h4>${traderecord[i].tr_amount}元</h4>
+                                <h2>${traderecord[i].tr_amount}元</h2>
                             </div>                            
                             <hr>
                         </div>
