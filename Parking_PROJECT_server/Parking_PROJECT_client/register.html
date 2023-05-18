@@ -20,28 +20,6 @@
     <!-- css -->
     <link rel="stylesheet" href="./assets/css/member/login_signup.css">
 
-    <style>
-        #checkEye,
-        #checkEye1 {
-            position: relative;
-            right: 40px;
-            color: #0069B4;
-        }
-
-        label>span {
-            color: red;
-        }
-
-        label {
-            display: block;
-            margin-left: 25%;
-        }
-
-        .accPwd {
-            margin-left: 25%;
-            width: 50%;
-        }
-    </style>
 </head>
 
 <body>
@@ -64,8 +42,11 @@
             <div class="row form-group justify-content-center">
                 <div class="col-12 mb-4">
                     <label class="accPwdWord"><span>*</span> 會員帳號</label>
-                    <input name="ac" id="userAccount" type="text" class="border border-1 rounded-2   accPwd "
+                    <input name="ac" id="userAccount" type="text" class="border border-1 rounded-2 accPwd"
                         placeholder="User001" required="required" minlength="2">
+                    <p class="fz-3 fw-bold" id="acErrorMessage" style="margin-left: 25%; width: 50%;">
+                        </p>
+
                 </div>
             </div>
 
@@ -75,6 +56,8 @@
                     <input name="phone" id="userPhone" class="border border-1 rounded-2   accPwd" type="tel"
                         placeholder="09xxxxxxxx" required="required" maxlength="11" pattern="09+[0-9]{8}"
                         oninput="setCustomValidity('');" oninvalid="setCustomValidity('手機號碼格式錯誤，須為09開頭。');">
+                    <p class="fz-3 fw-bold" id="phoneErrorMessage" style="margin-left: 25%; width: 50%;">
+                        </p>
                 </div>
             </div>
 
@@ -83,6 +66,8 @@
                     <label class="accPwdWord"><span>*</span> 聯絡信箱</label>
                     <input name="email" id="userEmail" class="border border-1 rounded-2  accPwd" type="email"
                         placeholder="a@g.xx" required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                    <p class="fz-3 fw-bold" id="emailErrorMessage" style="margin-left: 25%; width: 50%;">
+                        </p>
                 </div>
             </div>
 
@@ -94,7 +79,7 @@
                         minlength="6" placeholder="Pwd0dd001" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$"
                         required>
                     <i id="checkEye" class="fas fa-eye" style="width: 0;"></i>
-                    <p class="accPwdWord" style="font-size: 10px;margin-left: 25%; width: 50%;">密碼至少 6 個字元，且包含英文大小寫和數字。
+                    <p class="fz-3 fw-bold" id="passErrorMessage" style="margin-left: 25%; width: 50%;">
                     </p>
 
                 </div>
@@ -108,14 +93,13 @@
                         oninput="setCustomValidity('');"
                         onchange="if(document.getElementById('userPassword').value != document.getElementById('userPassword1').value){setCustomValidity('密碼不吻合');}">
                     <i id="checkEye1" class="fas fa-eye " style="width: 0;"></i>
-                    <p class="accPwdWord" style="font-size: 10px;margin-left: 25%; width: 50%;">請再次輸入密碼。</p>
                 </div>
             </div>
 
 
             <div class="row justify-content-center">
                 <div class="col-12 placeCenter mb-4">
-                    <button type="button" id="registerBtn"
+                    <button type="submit" id="registerBtn"
                         style="width: 50%; height: 35px; background-color: #34A853; color: white;"
                         class="btn btn-block placeCenter"><span style="font-size: 18px;"><b>註冊</b> </span>
                     </button>
@@ -125,7 +109,6 @@
         </div>
 
     </form>
-
 
     <script>
         // 密碼顯示/隱藏
@@ -160,10 +143,42 @@
             var email = $("input[name=email]").val();
             var money = '0';
 
-            // 偵錯驗證
-            if (name === "" || ac === "" || pass === "" || phone === "" || email === "") {
-                return;
+            // 正規表達式
+            var acPattern = /^[a-zA-Z0-9]{6,}$/;
+            var phonePattern = /^09\d{8}$/;
+            var emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+            var passPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+
+            // 驗證
+            if (!acPattern.test(ac)) {
+                $("#acErrorMessage").text("帳號無效，帳號必須由至少6個英文或數字組成");
+                $("#acErrorMessage").addClass("error");
+            } else {
+                $("#acErrorMessage").text("");
             }
+
+            if (!phonePattern.test(phone)) {
+                $("#phoneErrorMessage").text("手機號碼格式錯誤，須為09開頭");
+                $("#phoneErrorMessage").addClass("error");
+            } else {
+                $("#phoneErrorMessage").text("");
+            }
+
+            if (!emailPattern.test(email)) {
+                $("#emailErrorMessage").text("請輸入有效的郵件地址");
+                $("#emailErrorMessage").addClass("error");
+            } else {
+                $("#emailErrorMessage").text("");
+            }
+
+            if (!passPattern.test(pass)) {
+                $("#passErrorMessage").text("密碼至少 6 個字元，且包含英文大小寫和數字");
+                $("#passErrorMessage").addClass("error");
+                return
+            } else {
+                $("#passErrorMessage").text("");
+            }
+
 
             // 傳送 AJAX 請求
             var formData = {
@@ -174,11 +189,13 @@
                 email: email,
                 money: money
             };
+
             $.ajax({
                 type: 'POST',
                 url: 'http://localhost:3000/insert/member',
                 data: formData
-               
+                // data: JSON.stringify(formData),
+                // contentType: 'application/json'
             })
 
             alert('註冊成功')

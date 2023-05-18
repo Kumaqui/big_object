@@ -128,3 +128,19 @@ p {
 footer a {
     text-decoration: none;
 }
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+.navbar .navbar-nav a {
+    margin-left: 0px;
+}
+
+/* map */
+#map {
+    width: 90%;
+    height: 500px;
+    margin: 5%;
+    z-index: 0;
+}

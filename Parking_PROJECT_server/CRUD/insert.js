@@ -1,4 +1,5 @@
 var express = require('express');
+var multer = require('multer');
 var api = express.Router();
 var config = require('./config.js')
 api.post('/carstay',function(req,res){
@@ -24,6 +25,16 @@ api.post('/member',function(req,res){
     })
     res.send("新增成功");
 })
+api.post('/member/:id',function(req,res){
+    // res.send('123456');
+    var sql ='INSERT INTO member(member_image) VALUES (?)'
+    config.query(sql,[req.body.url],
+        function(err,result,fields){
+            console.log(err);
+    })
+    res.send("新增成功");
+})
+
 api.post('/license',function(req,res){
     // res.send('123456');
     var sql ='INSERT INTO license(license,member_id) VALUES (?,?)'

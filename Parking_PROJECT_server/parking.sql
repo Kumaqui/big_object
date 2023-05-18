@@ -18,8 +18,8 @@ member_ac  varchar(50),
 member_pass varchar(50) , 
 member_phone varchar(50), 
 member_email varchar(50),
-member_money int DEFAULT 0);
-
+member_money int DEFAULT 0,
+member_image varchar(100));
 create table carparking.license 
 (license varchar(10) primary key NOT NULL , 
 member_id int, 

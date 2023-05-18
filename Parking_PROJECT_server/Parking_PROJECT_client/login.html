@@ -14,45 +14,12 @@
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" />
   <script src="./assets/js/BS5_js/bootstrap.bundle.js"></script> -->
 
-
   <!-- jQuery -->
   <script src="./assets/js/jquery-3.6.4.min.js"></script>
 
   <!-- css -->
   <link rel="stylesheet" href="./assets/css/member/login_signup.css">
 
-  <style>
-    .container {
-      position: relative;
-      padding-left: 0;
-      padding-right: 0;
-    }
-
-    .searchIcon {
-      position: relative;
-      right: 50px;
-      color: #0069B4;
-    }
-
-    .accPwd {
-      margin-left: 25%;
-      width: 50%;
-    }
-
-    #checkEye {
-      position: relative;
-      right: 40px;
-      color: #0069B4;
-    }
-
-    #loginBtn {
-      width: 50%;
-      height: 35px;
-      background-color: #0069B4;
-      color: white;
-      margin-left: 25%;
-    }
-  </style>
 
 </head>
 
@@ -69,11 +36,11 @@
     </div>
     <div class="row">
       <div class="col-12 text-center" style="margin-top: 80px;  position: absolute; z-index: 2;">
-        <input class="border border-white rounded-2 text-center ms-5" style="width: 50%; height: 35px;" type="search"
-          placeholder="你要到哪裡?" aria-label="Search">
+        <input class="border border-white rounded-2 text-center ms-5 shadow-sm" style="width: 50%; height: 35px;"
+          type="search" placeholder="你要到哪裡?" aria-label="Search">
         <button class="btn border-0 searchIcon" type="submit">
-          <i class="fas fa-search"></i>
-          <i class="fas fa-solid fa-chevron-left" style="color: #000000;"></i>
+          <!-- <i class="fas fa-search"></i> -->
+          <!-- <i class="fas fa-solid fa-chevron-left" style="color: #000000;"></i> -->
 
         </button>
       </div>
@@ -117,18 +84,12 @@
 
     <div class="row justify-content-center">
       <div class="col-12" style="margin-top: 250px; position: absolute; z-index: 7;">
-        <a href="#">
+        <a href="register.html">
           <p class="wordColor placeCenter">註冊新用戶</p>
         </a>
       </div>
     </div>
-
-
   </div>
-
-
-
-
 
   <script>
     // 密碼顯示/隱藏
@@ -162,10 +123,11 @@
         // 跳頁判斷 localStorage.getItem("memberID")
 
         if (ac === jsonData[0].member_ac && pass === jsonData[0].member_pass) {
-          alert('go')
+          alert('登入成功')
           window.location.href = ('index.html'); //頁面跳轉
+          
         } else {
-          alert('not') //密碼錯誤 
+          alert('密碼錯誤') //密碼錯誤 
         }
       });
     })
@@ -179,11 +141,13 @@
 
     function readAndShow() {
       if (localStorage["member_ac"])
-        document.querySelector('input[name="member_ac"]').value = localStorage.getItem("member_ac"); 
+        document.querySelector('input[name="member_ac"]').value = localStorage.getItem("member_ac");
     }
 
     window.onload = readAndShow;
   </script>
+
+
 
 </body>
 
