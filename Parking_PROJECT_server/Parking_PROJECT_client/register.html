@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 
     <!-- icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" />
-    <script src="./assets/js/BS5_js/bootstrap.bundle.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" />
+    <script src="./assets/js/BS5_js/bootstrap.bundle.js"></script> -->
 
     <!-- jQuery -->
     <script src="./assets/js/jquery-3.6.4.min.js"></script>
@@ -45,7 +45,7 @@
                     <input name="ac" id="userAccount" type="text" class="border border-1 rounded-2 accPwd"
                         placeholder="User001" required="required" minlength="2">
                     <p class="fz-3 fw-bold" id="acErrorMessage" style="margin-left: 25%; width: 50%;">
-                        </p>
+                    </p>
 
                 </div>
             </div>
@@ -57,7 +57,7 @@
                         placeholder="09xxxxxxxx" required="required" maxlength="11" pattern="09+[0-9]{8}"
                         oninput="setCustomValidity('');" oninvalid="setCustomValidity('手機號碼格式錯誤，須為09開頭。');">
                     <p class="fz-3 fw-bold" id="phoneErrorMessage" style="margin-left: 25%; width: 50%;">
-                        </p>
+                    </p>
                 </div>
             </div>
 
@@ -67,7 +67,7 @@
                     <input name="email" id="userEmail" class="border border-1 rounded-2  accPwd" type="email"
                         placeholder="a@g.xx" required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                     <p class="fz-3 fw-bold" id="emailErrorMessage" style="margin-left: 25%; width: 50%;">
-                        </p>
+                    </p>
                 </div>
             </div>
 
@@ -89,9 +89,9 @@
                 <div class="col-12 mb-5">
                     <label class="accPwdWord"><span>*</span> 確認登入密碼</label>
                     <input id="userPassword1" class="border border-1 rounded-2 accPwd" placeholder="Pwd0dd001"
-                        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$" required
+                        type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$" required
                         oninput="setCustomValidity('');"
-                        onchange="if(document.getElementById('userPassword').value != document.getElementById('userPassword1').value){setCustomValidity('密碼不吻合');}">
+                        onchange="if(document.getElementById('userPassword').value != document.getElementById('userPassword1').value){setCustomValidity('密碼不符合');}">
                     <i id="checkEye1" class="fas fa-eye " style="width: 0;"></i>
                 </div>
             </div>
@@ -99,7 +99,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-12 placeCenter mb-4">
-                    <button type="submit" id="registerBtn"
+                    <button type="button" id="registerBtn"
                         style="width: 50%; height: 35px; background-color: #34A853; color: white;"
                         class="btn btn-block placeCenter"><span style="font-size: 18px;"><b>註冊</b> </span>
                     </button>
@@ -109,6 +109,15 @@
         </div>
 
     </form>
+
+    <!-- 在網頁的<body>標籤內新增以下程式碼 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close text-end">&times;</span>
+            <h5 id="modal-message" class="fw-bold text-center"></h5>
+        </div>
+    </div>
+
 
     <script>
         // 密碼顯示/隱藏
@@ -155,6 +164,7 @@
                 $("#acErrorMessage").addClass("error");
             } else {
                 $("#acErrorMessage").text("");
+
             }
 
             if (!phonePattern.test(phone)) {
@@ -162,6 +172,7 @@
                 $("#phoneErrorMessage").addClass("error");
             } else {
                 $("#phoneErrorMessage").text("");
+
             }
 
             if (!emailPattern.test(email)) {
@@ -169,6 +180,7 @@
                 $("#emailErrorMessage").addClass("error");
             } else {
                 $("#emailErrorMessage").text("");
+
             }
 
             if (!passPattern.test(pass)) {
@@ -177,6 +189,7 @@
                 return
             } else {
                 $("#passErrorMessage").text("");
+
             }
 
 
@@ -191,15 +204,44 @@
             };
 
             $.ajax({
-                type: 'POST',
-                url: 'http://localhost:3000/insert/member',
-                data: formData
-                // data: JSON.stringify(formData),
-                // contentType: 'application/json'
-            })
+                type: 'GET',
+                url: `http://localhost:3000/select/member/${ac}`,
+            }).done(function (x) {
+                x = JSON.parse(x)
+                var y = x[0] || { member_ac: "無" }
+                if (ac == y.member_ac) {
+                    
+                    var modal = document.getElementById("modal");
+                    var modalMessage = document.getElementById("modal-message");
+                    modal.style.display = "block";
+                    modalMessage.textContent = "此帳號已經有人使用！";
 
-            alert('註冊成功')
-            window.location.href = ('login.html'); //頁面跳轉
+                    var closeBtn = document.getElementsByClassName("close")[0];
+                    closeBtn.onclick = function () {
+                        modal.style.display = "none";
+                        window.location.href = 'register.html';
+                    }
+
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:3000/insert/member',
+                        data: formData
+                    })
+
+                    modal = document.getElementById("modal");
+                    modalMessage = document.getElementById("modal-message");
+                    modal.style.display = "block";
+                    modalMessage.textContent = "註冊成功！";
+                    // 設置關閉按鈕的點擊事件
+                    var closeBtn = document.getElementsByClassName("close")[0];
+                    closeBtn.onclick = function () {
+                        modal.style.display = "none";
+                        window.location.href = 'login.html';
+                    }
+
+                }
+            })
         });
 
     </script>

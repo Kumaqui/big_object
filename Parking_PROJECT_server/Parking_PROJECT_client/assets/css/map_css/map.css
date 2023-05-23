@@ -58,7 +58,7 @@
     bottom: 0;
     overflow-y: scroll;
     width: 390px;
-    height: 80vh;
+    height: 70vh;
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-in-out;
@@ -67,7 +67,7 @@
 }
 
 .sidebar.collapsed {
-    transform: translateY(400px);
+    transform: translateY(65vh);
 }
 
 
@@ -167,6 +167,7 @@ select {
     font-size: 8px;
     line-height: 11px;
 }
+
 
 /* 將下拉選單的選項文字置中 */
 #filter {
@@ -467,18 +468,33 @@ margin-right: -13px; */
     font-style: normal;
     font-size: 10pt;
     padding: 3px 5px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.934);
 }
+
 #special_select {
     font-family: 'Nunito';
     font-style: normal;
     font-size: 10pt;
     padding: 3px 5px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.934);
 }
+
 #type_select {
     font-family: 'Nunito';
     font-style: normal;
     font-size: 10pt;
     padding: 3px 5px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.934);
+
+}
+
+option {
+    font-weight: bold;
+    font-size: 10pt;
+    color: rgba(0, 0, 0, 0.934);
 }
 
 .distance {
