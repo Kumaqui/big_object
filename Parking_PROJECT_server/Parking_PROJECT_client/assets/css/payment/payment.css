@@ -52,13 +52,13 @@
     border: 8px solid #f3f3f3;
     border-top: 15px solid #3498db;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     animation: spin 1s linear infinite;
     visibility: hidden;
     position: absolute;
     top: 45%;
-    left: 45%;
+    left: 43%;
     transform: translate(-50%, -50%);
 
 }
@@ -66,9 +66,9 @@
 #loader_text {
 
     position: absolute;
-    top: 55%;
-    left: 44%;
-    font-size: 24px;
+    top: 57%;
+    left: 42%;
+    font-size: 20px;
     color: #0069B4;
     visibility: hidden;
 }
@@ -346,4 +346,7 @@ select[name="license"] {
     border: none;
     color: white;
     text-decoration: none;
+}
+.a_none:hover{
+    color: white;
 }

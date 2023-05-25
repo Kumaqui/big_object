@@ -181,10 +181,10 @@
 
     <div style="margin-top: 50px;" class="container">
         <div class="row ">
-            <div class="col-9">
-                <h4 class="color_gary">目前Car Parking帳戶餘額</h4>
+            <div class="col-8">
+                <h4 class="color_gary mt-1">目前Car Parking帳戶餘額</h4>
             </div>
-            <div class="col-1">
+            <div class="col-4">
                 <h2 class="color_gary member_money"></h2>
             </div>
         </div>
@@ -234,7 +234,7 @@
             var data = JSON.parse(x);
             // console.log(data)
             var total_money = Number(data[0].member_money) + Number(stored)
-            $(".member_money").append(total_money)
+            $(".member_money").append(`${total_money}元`)
             $.ajax({
                 url: 'http://localhost:3000/update/membermoney',
                 type: "PUT",
@@ -244,7 +244,7 @@
                 }
             })
         })
-        $(".stored").append(`$${stored}`).css("font-weight", "bold")
+        $(".stored").append(`${stored}元`).css("font-weight", "bold")
         $(".time").append(`${date.getFullYear()} / ${tm} / ${td}`)
         $(".stored_tr").on("click", function () {
             // 確定儲值按下 傳到交易紀錄，並更新錢包金額

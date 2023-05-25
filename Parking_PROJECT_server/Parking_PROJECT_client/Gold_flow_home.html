@@ -23,7 +23,7 @@
             bottom: 0px;
             left: 0px;
             right: 0px;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -130,72 +130,84 @@
             transform: scale(1.2);
             background-color: white;
         }
-        .bg_blue{
+
+        .bg_blue {
             background-color: #0069B4;
         }
-        .color_white{
+
+        .color_white {
             color: white;
         }
+
         .btn_i {
             color: white;
             text-align: center;
             font-size: 24px;
         }
+
         .dis_flex_row_j_center {
             display: flex;
             flex-direction: row;
             justify-content: center;
         }
-        .color_blue{
+
+        .color_blue {
             color: #0069B4;
+        }
+
+        .bg_white {
+            background-color: white;
         }
     </style>
 </head>
 
 <body>
     <div class="bg_black_member hidden">
-        <div class="row" style="position: fixed; top:30%;">
+
+        <div class="row bg_white ms-3 me-3" style="position: fixed; top:30%; padding: 10px;">
             <div class="col-12">
                 <div class="row">
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_1.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car1.png" alt=""></div>
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_2.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car2.png" alt=""></div>
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_3.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car3.png" alt=""></div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="row">
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_4.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car4.png" alt=""></div>
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_5.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car5.png" alt=""></div>
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_6.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car6.png" alt=""></div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="row">
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_7.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car7.png" alt=""></div>
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_8.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car8.png" alt=""></div>
                     <div class="col-4 dis_flex_center"> <img style="width: 90px; height:90px"
-                            src="./assets/image/Gold_Flow_image/member_photo_9.png" alt=""></div>
+                            src="./assets/image/Gold_Flow_image/car9.png" alt=""></div>
                 </div>
             </div>
             <div class="col-12 mt-4">
                 <div class="row">
-                    <div class="col-6 dis_flex_center"><button class="btn btn-primary cancel">
+                    <div class="col-6 dis_flex_center"><button class="w-100 btn btn-primary cancel">
                             <h3 class="mt-2"><b>取消</b></h3>
                         </button></div>
-                    <div class="col-6 dis_flex_center"><button class="btn btn-primary img_sure">
+                    <div class="col-6 dis_flex_center"><button class="w-100 btn btn-primary img_sure">
                             <h3 class="mt-2"><b>確定</b></h3>
                         </button></div>
                 </div>
             </div>
         </div>
+
+
     </div>
     <div class="bg_blue">
         <div style="position: absolute; left:5px">
@@ -210,7 +222,7 @@
         </div>
     </div>
     <div class=" container dis_flex_row" style="margin-top: 20px;">
-        <img style="width: 90px;" class="member_img " >
+        <img style="width: 90px;" class="member_img ">
         <div style="position: absolute;left:15px; top:90px" class="photo_change hidden">
             <button class="border_none photo_change_button">
                 <h3><b>更改頭像</b></h3>
@@ -218,10 +230,10 @@
         </div>
         <div class="dis_flex_column_j_center ps-2">
             <div>
-                <h2 class="color_gary name"><b></b> </h2>
+                <h2 class="color_blue name"><b></b> </h2>
             </div>
             <div>
-                <h3 class="color_gary ac"><b></b> </h3>
+                <h3 class="color_blue ac"><b></b> </h3>
             </div>
         </div>
     </div>
@@ -230,7 +242,7 @@
     <div class="dis_flex_center container-fluid">
         <div class="row border_gray container" style=" border-radius: 7px;">
             <div class="col-12 " style="padding-top: 10px;">
-                <h3 class="color_gary"><b>Car Parking 帳戶 (TWD)</b> </h3>
+                <h3 class="color_gary"><b>Car Parking 帳戶</b> </h3>
             </div>
             <div class="col-12 ">
                 <div class="dis_flex_center ">
@@ -251,25 +263,21 @@
 
     <hr class="color_gary">
     <div class="dis_flex_column_center">
-        <h3 class="color_gary">車牌號碼</h3>
-        <div style=" padding-top: 30px;">
-            <div class="dis_flex_center ps-2 pt-2"
-                style="float: right; width:150px; height:70px; background-image: url('./assets/image/Gold_Flow_image/pay-22.png');background-size:150px 70px;">
-                <select style="width:115px; " class="license">
+        <h3 class="color_blue"><b>車牌號碼</b> </h3>
+        <div class="license">
 
-                </select>
-            </div>
         </div>
     </div>
+    <div class="modal_license">
+
+    </div>
+    <!-- 新增車牌 -->
     <div class="dis_flex_row  mt-4" style="justify-content: center;">
         <div>
             <button class="license_update border_none">
-                <img style=" width:130px;" src="./assets/image/Gold_Flow_image/pay-20.png" alt="">
+                <img style=" width:150px;" src="./assets/image/Gold_Flow_image/pay-20.png" alt="">
             </button>
         </div>
-        <button class="license_delete border_none">
-            <img style=" width:130px;" src="./assets/image/Gold_Flow_image/pay-01.png" alt="">
-        </button>
     </div>
     <hr class="color_gary ">
     <br>
@@ -297,30 +305,32 @@
             <button class="border_none wallet">
                 <img style="width: 45px;" src="./assets/image/Gold_Flow_image/pay-05.png" alt="">
             </button>
-            <h4 class="color_blue " style=" margin-top: 18px;"><b>線上錢包</b> </h4>
+            <h4 class="color_blue " style="margin-top: 18px;"><b>線上錢包</b> </h4>
         </div>
     </div>
 
 
 
     <script>
-         var id = localStorage.getItem("memberID")
+        var id = localStorage.getItem("memberID")
         //  判定資料庫是否有image 沒有則放預設圖片
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/select/member",
-            data: {id},
-        }).done(function(e){
+            data: { id },
+        }).done(function (e) {
             var dataServer = JSON.parse(e);
             // console.log(dataServer)
             var member_photo = dataServer[0].member_image
             // console.log(member_photo)
-            if(member_photo){
+            if (member_photo) {
                 $(".member_img").attr("src", member_photo)
-            }else{
+            } else {
                 $(".member_img").attr("src", "./assets/image/Gold_Flow_image/member.jpg")
             }
         })
+
+
         // 判定登入
         var member_ac = localStorage.getItem("member_ac")
         if (!member_ac) {
@@ -329,7 +339,7 @@
     </script>
 
     <script>
-       
+
         // console.log(id)
 
         // 更改頭像
@@ -387,19 +397,72 @@
                 var name = dataServer[0].member_name;
                 var ac = dataServer[0].member_ac;
                 // console.log(money)
-                $(".member_money").append(money).css("font-weight", "bold")
+                $(".member_money").append(`${money}元`).css("font-weight", "bold")
                 $(".name").append(name).css("font-weight", "bold")
                 $(".ac").append(ac).css("font-weight", "bold")
             }
         )
+        $.ajax({
+            url: `http://localhost:3000/select/license/${id}`,
+            type: "GET"
+        }).done(function (x) {
+            var datafromS = JSON.parse(x);
+            // console.log(datafromS)
 
-        var url = `http://localhost:3000/select/license/${id}`;
-        $.get(url, function (license) {
-            $.each(JSON.parse(license), function (index, value) {
-                // console.log(value.license)
-                $(".license").append(`<option value=${value.member_id}>  ${value.license}</option>`)
-            })
+            for (i = 0; i < datafromS.length; i++) {
+                $('.license').append(
+                    `
+                    <div class="dis_flex_center mt-2">
+                    <div class="pt-3 ps-4 dis_flex_center" style=" width:180px; height:80px; background-image: url('./assets/image/Gold_Flow_image/pay-22.png');background-size:180px 80px;">
+                   <h2><b> ${datafromS[i].license}<b> </h3>
+                    <button data-bs-toggle="modal" data-bs-target="#exampleModal${datafromS[i].license}" class=" border_none license_delete" style="position: relative; top:-34px;right:-10px""> 
+                        <i class="fa fa-times-circle color_blue" style="font-size:24px;"></i>
+                    </button>
+                </div >
+                </div>
+                `
+                )
+                $(".modal_license").append(
+                    `
+    <div class="modal fade" id="exampleModal${datafromS[i].license}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h2 class="modal-title color_blue" id="exampleModalLabel"><b>是否刪除該車牌</b> </h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <h3><b>刪除後需重新新增</b> </h3> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" data-bs-license="${datafromS[i].license}" class="btn btn-primary" onclick='license_delete("${datafromS[i].license}")'>確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                    `
+                )
+            }
         })
+        // onclick="license_delete('${datafromS[i].license}')"
+        function license_delete(x) {
+            // console.log(x)
+            // console.log("12")
+            deletelicense(x)
+        }
+        function deletelicense(x) {
+            // console.log(x)
+            $.ajax({
+                url: `http://localhost:3000/delete/license`,
+                type: "post",
+                data: {
+                    license: x
+                }
+            }).done(function(){
+                location.reload();
+            })
+        }
 
 
         $(".wallet").on("click", function () {

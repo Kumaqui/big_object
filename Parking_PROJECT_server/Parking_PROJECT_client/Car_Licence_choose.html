@@ -162,6 +162,7 @@
             }
         }
         function deletelicense(x) {
+            console.log(x)
             $.ajax({
                 url: `http://localhost:3000/delete/license`,
                 type: "post",
@@ -169,7 +170,7 @@
                     license: x
                 }
             }).done(function () {
-                window.location = "./Car_Licence_choose.html"
+                // window.location = "./Car_Licence_choose.html"
             })
         }
 

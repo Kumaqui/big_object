@@ -258,11 +258,11 @@
                     <h3 class="ac"><b></b> </h3>
                 </div>
                 <div class="dis_flex_center pt-2" >
-                    <div class="me-2">
-                        <h4 ><b>TWD</b> </h4>
-                    </div>
                     <div>
-                        <h2 class="money "> <b> </b></h2>
+                        <h2 class="money me-1"> <b> </b></h2>
+                    </div>
+                    <div >
+                        <h3 ><b>元</b> </h3>
                     </div>
                 </div>
             </div>
@@ -365,13 +365,13 @@
                         case 2: type = '繳費'; break;
                     }
                     $('#traderecord_data').append(`
-                        <div class="col-16 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
-                            <div class="col-6" style="text-align: left;">
+                        <div class="col-12 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
+                            <div class="col-9" style="text-align: left;">
                                 <h4>${traderecord[i].tr_counterparty}</h4>
-                                <h6 class="color_gary">Carparking${type}</h6>
+                                <h5 class="color_blue">Carparking${type}</h5>
                                 <h6 style="color: gray">${traderecord[i].tr_date} ${traderecord[i].tr_time}</h6>
                             </div>
-                            <div class="col-6" style="text-align: right;">
+                            <div class="col-3" style="text-align: right;">
                                 <h2>${traderecord[i].tr_amount}元</h2>
                             </div>                            
                             <hr>

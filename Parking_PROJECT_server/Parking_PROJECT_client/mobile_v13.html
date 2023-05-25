@@ -419,18 +419,18 @@
             if (parkDct['AvailableCar'] < 0) {
                 var CorrectAvailableCar = 0;
                 marker.bindPopup(`
-                            <b>${parkDct['Position']}</b><br>
-                            總車位數：${parkDct['TotalCar']}<br>
-                            剩餘車位：${CorrectAvailableCar}<br>
-                            <button onclick="routing(${parkDct['Y']}, ${parkDct['X']})">開始導航</button>
+                            <h6>${parkDct['Position']}</h6>
+                            <h6>總車位數：${parkDct['TotalCar']}</h6>
+                            <h6>剩餘車位：${CorrectAvailableCar}</h6>
+                            <button style='font-size: 14px;' onclick="routing(${parkDct['Y']}, ${parkDct['X']})">開始導航</button>
                         `)
                 // add parking info to list(if AvailableCar < 0)
             } else {
                 marker.bindPopup(`
-                            <b>${parkDct['Position']}</b><br>
-                            總車位數：${parkDct['TotalCar']}<br>
-                            剩餘車位：${parkDct['AvailableCar']}<br>
-                            <button onclick="routing(${parkDct['Y']}, ${parkDct['X']})">開始導航</button>
+                            <h6>${parkDct['Position']}</h6>
+                            <h6>總車位數：${parkDct['TotalCar']}</h6>
+                            <h6>剩餘車位：${parkDct['AvailableCar']}</h6>
+                            <button style='font-size: 14px;' onclick="routing(${parkDct['Y']}, ${parkDct['X']})">開始導航</button>
                         `)
                 // add parking info to list(if AvailableCar >= 0)
             }
@@ -439,8 +439,8 @@
         // 車格標籤屬性匯入提示窗
         function roadLotInfo(parkDct, marker) {
             marker.bindPopup(`
-                車格編號：${parkDct['PS_ID']}<br>
-                <button onclick="routing(${parkDct['PS_Lat']}, ${parkDct['PS_Lng']})">開始導航</button>
+                <h6>車格編號：${parkDct['PS_ID']}</h6>
+                <button style='font-size: 14px;' onclick="routing(${parkDct['PS_Lat']}, ${parkDct['PS_Lng']})">開始導航</button>
             `)
         }
 
@@ -460,7 +460,7 @@
         // user icon
         var userIcon = L.icon({
             iconUrl: './assets/image/map_control_img/user_place.png',
-            iconSize: [40, 40],
+            iconSize: [60, 60],
             className: 'userIcon'
         });
         // search icon
@@ -1119,7 +1119,7 @@
                                     if (parkInfo['status'] == 0) {
                                         var parkOk = L.icon({
                                             iconUrl: './assets/image/map_control_img/no_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadOkDisabled'
                                         });
                                         var roadOkDisabled = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1128,7 +1128,7 @@
                                     } else {
                                         var parkNon = L.icon({
                                             iconUrl: './assets/image/map_control_img/in_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadNonDisabled'
                                         });
                                         var roadNonDisabled = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon });
@@ -1147,7 +1147,7 @@
                                     if (parkInfo['status'] == 0) {
                                         var parkOk = L.icon({
                                             iconUrl: './assets/image/map_control_img/no_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadOkParents'
                                         });
                                         var roadOkParents = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1156,7 +1156,7 @@
                                     } else {
                                         var parkNon = L.icon({
                                             iconUrl: './assets/image/map_control_img/in_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadNonParents'
                                         });
                                         var roadNonParents = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon });
@@ -1175,7 +1175,7 @@
                                 if (parkInfo['status'] == 0) {
                                     var parkOk = L.icon({
                                         iconUrl: './assets/image/map_control_img/no_car.png',
-                                        iconSize: [15, 15],
+                                        iconSize: [20, 20],
                                         className: 'roadOk'
                                     });
                                     var roadOk = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1195,7 +1195,7 @@
                                     targetDis.push(L.latLng(userlat, userlng).distanceTo(L.latLng(roadlat, roadlng)));
                                     var parkOk = L.icon({
                                         iconUrl: './assets/image/map_control_img/no_car.png',
-                                        iconSize: [15, 15],
+                                        iconSize: [20, 20],
                                         className: 'roadOk'
                                     });
                                     var roadOk = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1204,7 +1204,7 @@
                                 } else {
                                     var parkNon = L.icon({
                                         iconUrl: './assets/image/map_control_img/in_car.png',
-                                        iconSize: [15, 15],
+                                        iconSize: [20, 20],
                                         className: 'roadNon'
                                     });
                                     var roadNon = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon });
@@ -1248,7 +1248,7 @@
                                     if (parkInfo['status'] == 0) {
                                         var parkOk = L.icon({
                                             iconUrl: './assets/image/map_control_img/no_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadOkDisabled'
                                         });
                                         var roadOkDisabled = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1257,7 +1257,7 @@
                                     } else {
                                         var parkNon = L.icon({
                                             iconUrl: './assets/image/map_control_img/in_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadNonDisabled'
                                         });
                                         var roadNonDisabled = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon });
@@ -1276,7 +1276,7 @@
                                     if (parkInfo['status'] == 0) {
                                         var parkOk = L.icon({
                                             iconUrl: './assets/image/map_control_img/no_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadOkParents'
                                         });
                                         var roadOkParents = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1285,7 +1285,7 @@
                                     } else {
                                         var parkNon = L.icon({
                                             iconUrl: './assets/image/map_control_img/in_car.png',
-                                            iconSize: [15, 15],
+                                            iconSize: [20, 20],
                                             className: 'roadNonParents'
                                         });
                                         var roadNonParents = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon });
@@ -1303,7 +1303,7 @@
                                 if (parkInfo['status'] == 0) {
                                     var parkOk = L.icon({
                                         iconUrl: './assets/image/map_control_img/no_car.png',
-                                        iconSize: [15, 15],
+                                        iconSize: [20, 20],
                                         className: 'roadOk'
                                     });
                                     var roadOk = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1320,7 +1320,7 @@
                                 if (parkInfo['status'] == 0) {
                                     var parkOk = L.icon({
                                         iconUrl: './assets/image/map_control_img/no_car.png',
-                                        iconSize: [15, 15],
+                                        iconSize: [20, 20],
                                         className: 'roadOk'
                                     });
                                     var roadOk = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkOk });
@@ -1329,7 +1329,7 @@
                                 } else {
                                     var parkNon = L.icon({
                                         iconUrl: './assets/image/map_control_img/in_car.png',
-                                        iconSize: [15, 15],
+                                        iconSize: [20, 20],
                                         className: 'roadNon'
                                     });
                                     var roadNon = L.marker([parkInfo['PS_Lat'], parkInfo['PS_Lng']], { icon: parkNon });

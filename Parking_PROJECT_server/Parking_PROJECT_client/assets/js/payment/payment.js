@@ -316,7 +316,7 @@ $.ajax({
 }).done(function (wallet) {
     $.each(JSON.parse(wallet), function (index, value) {
         // console.log(value)
-        $("#wallet").text(value.member_money).css("font-weight", "bold")
+        $("#wallet").text(`${value.member_money}元`).css("font-weight", "bold")
         // `<option>${value} </option>`
     })
 })
@@ -324,13 +324,13 @@ $.ajax({
 window.addEventListener("scroll", function () {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         // $(".dis_wrap").removeClass("pt-2")
-        $(".scroll").css("height", "8vh").css("transition-duration", "0.1s")
+        $(".scroll").css("height", "11vh").css("transition-duration", "0.1s")
         $(".scroll_row").css("flexWrap", "nowrap").css("transition-duration", "0.1s")
         // $(".dis_flex_row_1").css("margin-bottom", "15px").css("transition-duration", "0.1s")
         $(".i_top").removeClass("i_hidden")
     } else {
         $(".dis_wrap").addClass("pt-2")
-        $(".scroll").css("height", "12vh").css("transition-duration", "0.3s")
+        $(".scroll").css("height", "16vh").css("transition-duration", "0.3s")
         $(".scroll_row").css("flexWrap", "wrap").css("transition-duration", "0.3s")
         // $(".dis_flex_row_1").css("margin-bottom", "0px").css("transition-duration", "0.3s")
         $(".i_top").addClass("i_hidden")

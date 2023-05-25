@@ -227,7 +227,7 @@
         $("#date").append(`${date.getFullYear()} / ${tm} / ${td}`)
         $("#time").append(` ${th} : ${tmin}`)
         var s = sessionStorage.getItem("payment");
-        $("#payment").append(`$${s}`).css("font-weight", "bolder")
+        $("#payment").append(`${s}元`).css("font-weight", "bolder")
 
         var id = localStorage.getItem("memberID")
         console.log(id)

@@ -24,23 +24,23 @@
 
 <body>
     <!--表單內容-->
-    <form style="margin: auto; width: 100%;" class="mb-4">
+    <form style="margin: auto; width: 100%;">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <p class="text-center mb-4" style="font-size: 32px; margin-top: 70px;"><b>會員註冊</b></p>
+                    <p class="text-center" style="font-size: 32px; margin-top: 10px;"><b>會員註冊</b></p>
                 </div>
             </div>
             <div class="row form-group justify-content-center">
                 <div class="col-12">
                     <label class="accPwdWord"><span>*</span> 名稱</label>
-                    <input name="name" id="userAccount" type="text" class="border border-1 rounded-2  mb-4 accPwd "
+                    <input name="name" id="userAccount" type="text" class="border border-1 rounded-2  mb-3 accPwd "
                         placeholder="User001" required="required" minlength="2">
                 </div>
             </div>
 
             <div class="row form-group justify-content-center">
-                <div class="col-12 mb-4">
+                <div class="col-12 mb-3">
                     <label class="accPwdWord"><span>*</span> 會員帳號</label>
                     <input name="ac" id="userAccount" type="text" class="border border-1 rounded-2 accPwd"
                         placeholder="User001" required="required" minlength="2">
@@ -51,7 +51,7 @@
             </div>
 
             <div class="row form-group justify-content-center">
-                <div class="col-12 mb-4">
+                <div class="col-12 mb-3">
                     <label class="accPwdWord"><span>*</span> 聯絡手機</label>
                     <input name="phone" id="userPhone" class="border border-1 rounded-2   accPwd" type="tel"
                         placeholder="09xxxxxxxx" required="required" maxlength="11" pattern="09+[0-9]{8}"
@@ -62,7 +62,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-12 mb-4">
+                <div class="col-12 mb-3">
                     <label class="accPwdWord"><span>*</span> 聯絡信箱</label>
                     <input name="email" id="userEmail" class="border border-1 rounded-2  accPwd" type="email"
                         placeholder="a@g.xx" required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
@@ -73,7 +73,7 @@
 
 
             <div class="row justify-content-center">
-                <div class="col-12 mb-4">
+                <div class="col-12 mb-3">
                     <label class="accPwdWord"><span>*</span> 設定登入密碼</label>
                     <input type="password" name="pass" id="userPassword" class="border border-1 rounded-2 accPwd"
                         minlength="6" placeholder="Pwd0dd001" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$"
@@ -86,7 +86,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-12 mb-5">
+                <div class="col-12 mb-4">
                     <label class="accPwdWord"><span>*</span> 確認登入密碼</label>
                     <input id="userPassword1" class="border border-1 rounded-2 accPwd" placeholder="Pwd0dd001"
                         type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$" required

@@ -38,9 +38,10 @@
                 <div class="col-12" style="text-align:center">
                     <h4 id="memberid">
                     </h4>
-                    <span style="font-size: 14px;">
-                        TWD
-                    </span><span style="font-size: 24px;" id="money">1000</span>
+                   
+                       
+                    <span style="font-size: 24px;" id="money">1000</span>
+                    <span style="font-size: 14px;">元</span>
                     <hr>
                     <div id="typeChoose">
 
@@ -225,14 +226,14 @@
                         case 2: type = '繳費'; break;
                     }
                     $('#traderecord_data').append(`
-                        <div class="col-16 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
-                            <div class="col-6" style="text-align: left;">
+                        <div class="col-12 row traderecord_data" datadate="${traderecord[i].tr_date}" datatype="${traderecord[i].tr_type}">
+                            <div class="col-9" style="text-align: left;">
                                 <h4>${traderecord[i].tr_counterparty}</h4>
-                                <p style="color: gray;">Carparking${type}</p>
-                                <p style="color: gray">${traderecord[i].tr_date} ${traderecord[i].tr_time}</p>
+                                <h5 style="color: #0069B4;">Carparking${type}</h5>
+                                <h6 style="color: gray">${traderecord[i].tr_date} ${traderecord[i].tr_time}</h6>
                             </div>
-                            <div class="col-6" style="text-align: right;">
-                                <h4>${traderecord[i].tr_amount}元</h4>
+                            <div class="col-3" style="text-align: right;">
+                                <h3>${traderecord[i].tr_amount}元</h3>
                             </div>                            
                             <hr>
                         </div>
