@@ -224,7 +224,7 @@
         <br>
         <!-- 停車場選單 -->
         <div id="parking_lot_item" class="accordion" id="accordion_map_list">
-            <div class="accordion-item" v-for="(parking_name, index) in parkingLot" :key="index">
+            <div class="accordion-item" v-for="(parking_name, index) in parkingLot" :key="index" v-if="parking_name.distance <= 2000">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button" type="button" v-on:click="toggleCollapse(parking_name.id)"
                         :class="{'collapsed': activeCollapse !== parking_name.id }"
@@ -308,7 +308,7 @@
         </div>
         <!-- 停車格選單 -->
         <div id="parking_road_item" class="accordion" id="accordion_map_list">
-            <div class="accordion-item" v-for="(parking, index) in parkingRoad" :key="index">
+            <div class="accordion-item" v-for="(parking, index) in parkingRoad" :key="index" v-if="parking.distance <= 2000">
                 <div class="accordion-item">
                     <h2 class="accordion-header" :class="{active: activeCollapse === index}"
                         @click="toggleCollapse(index)">
@@ -1908,7 +1908,7 @@
             .then(response => response.text())
             .then(csvString => {
                 const taichung_road_info = parseTaichungRoadInfo(csvString);
-                for (let i = 0; i < 1000; i++) { //taichung_road_info.length
+                for (let i = 0; i < taichung_road_info.length; i++) { //taichung_road_info.length
                     parkingRoad.push(taichung_road_info[i]);
                 }
 
