@@ -224,7 +224,7 @@
         <br>
         <!-- 停車場選單 -->
         <div id="parking_lot_item" class="accordion" id="accordion_map_list">
-            <div class="accordion-item" v-for="(parking_name, index) in parkingLot" :key="index" v-if="parking_name.distance <= 2000">
+            <div class="accordion-item" v-for="(parking_name, index) in parkingLot" :key="index" v-if="parking_name.distance <= 2000>
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button" type="button" v-on:click="toggleCollapse(parking_name.id)"
                         :class="{'collapsed': activeCollapse !== parking_name.id }"
@@ -306,14 +306,13 @@
                 </dialog>
             </div>
         </div>
+ 
         <!-- 停車格選單 -->
         <div id="parking_road_item" class="accordion" id="accordion_map_list">
-            <div class="accordion-item" v-for="(parking, index) in parkingRoad" :key="index" v-if="parking.distance <= 2000">
+            <div class="accordion-item" v-for="(parking, index) in parkingRoad" :key="index" v-if="parking.distance <= 2000 && parking.distance > 0">
                 <div class="accordion-item">
                     <h2 class="accordion-header" :class="{active: activeCollapse === index}"
                         @click="toggleCollapse(index)">
-
-
                         <button class="accordion-button" :class="{ collapsed: activeCollapse !== index }" type="button">
                             <p class="parking_name">{{ parking.rdname }}</p>
                             <p class="parking_subname"> ( {{ parking.se_road }} )</p>
