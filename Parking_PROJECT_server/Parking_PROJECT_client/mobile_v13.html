@@ -222,6 +222,70 @@
         </button>
 
         <br>
+        <!-- 停車格選單 -->
+        <div id="parking_road_item" class="accordion" id="accordion_map_list">
+            <div class="accordion-item" v-for="(parking, index) in parkingRoad" :key="index" v-if="parking.distance <= 2000 && parking.distance > 0 && parking.status === '0'">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" :class="{active: activeCollapse === index}"
+                        @click="toggleCollapse(index)">
+                        <button class="accordion-button" :class="{ collapsed: activeCollapse !== index }" type="button">
+                            <p class="parking_name">{{ parking.rdname }}</p>
+                            <p class="parking_subname"> ( {{ parking.se_road }} )</p>
+                            <div class="special-group">
+
+                                <div id="ParkingTypeR" style="display: none;">{{parking.ParkingType}}</div>
+                                <img v-if="parking.PS_type === '1'" id="handicapped"
+                                    src="./assets/image/map_image/handicapped.svg" style="margin: 2px;" alt="">
+                                <img v-if="parking.PS_type === '2'" id="Parent_Child"
+                                    src="./assets/image/map_image/Parent_Child.svg" style="margin: 2px;" alt="">
+                                <span v-if="parking.PS_type === '0'" style="margin: 2px;" alt="">&nbsp;</span>
+
+                                <img v-if="parking.status === '0'" id="status_light"
+                                    src="./assets/image/map_image/Vector_green.svg" style="margin: 4.2px;" alt="">
+                                <img v-else src="./assets/image/map_image/Vector_red.svg" style="margin: 4.2px;" alt="">
+                            </div>
+                        </button>
+                    </h2>
+                    <div :id="'collapse' + index" class="accordion-collapse collapse"
+                        :class="{show: activeCollapse === index}">
+                        <div class="accordion-body">
+                            <div id="load_addr">
+                                <p>車格編號：{{ parking.ceiiId }}</p>
+                            </div>
+                            <div class="row">
+                                <div id="update_info" class="col-8">
+                                    <p class="up_time">更新時間：{{ parking.Updatetime }}</p>
+                                </div>
+                                <div id="distance_info" class="col-4">
+                                    <p class="distance">{{ parking.distanceKM }}公里{{ parking.distanceM }}公尺</p>
+                                    <p class="distanceR" style="display: none;">{{ parking.distance }}</p>
+                                    <p class="distance_time">{{ parking.travelTime }}分鐘</p>
+                                </div>
+                            </div>
+                            <div id="roadX" style="display:none;">{{ parking.TWD97_X }}</div>
+                            <div id="roadY" style="display:none;">{{ parking.TWD97_Y }}</div>
+
+                            <img id="view_fee" class="btn" src="./assets/image/map_image/show_fee-btn.svg"
+                                @click="showDialog_roadfee(parking.paycash)" alt="">
+                            <!-- <img id="like" class="btn" src="./assets/image/map_image/like_btn.svg" alt=""> -->
+                            <img id="go" class="btn" src="./assets/image/map_image/go_btn.svg"
+                                @click="routing(parking.TWD97_Y, parking.TWD97_X)" alt="">
+                        </div>
+                    </div>
+                </div>
+                <!-- 收費資訊 -->
+                <dialog :key="parking.id" id="Dialog_road_fee">
+                    <div class="dialog-header">
+                        <h6 class="dialog-title">收費方式</h6>
+                        <i class="fas fa-times fa-xs close-icon" @click="closeDialog_roadfee()"></i>
+                    </div>
+                    <div class="dialog_fee_content">
+                        <h6>{{dialog_roadfee_content}}</h6>
+                    </div>
+                </dialog>
+            </div>
+        </div>
+
         <!-- 停車場選單 -->
         <div id="parking_lot_item" class="accordion" id="accordion_map_list">
             <div class="accordion-item" v-for="(parking_name, index) in parkingLot" :key="index" v-if="parking_name.distance <= 2000">
@@ -307,69 +371,7 @@
             </div>
         </div>
  
-        <!-- 停車格選單 -->
-        <div id="parking_road_item" class="accordion" id="accordion_map_list">
-            <div class="accordion-item" v-for="(parking, index) in parkingRoad" :key="index" v-if="parking.distance <= 2000 && parking.distance > 0">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" :class="{active: activeCollapse === index}"
-                        @click="toggleCollapse(index)">
-                        <button class="accordion-button" :class="{ collapsed: activeCollapse !== index }" type="button">
-                            <p class="parking_name">{{ parking.rdname }}</p>
-                            <p class="parking_subname"> ( {{ parking.se_road }} )</p>
-                            <div class="special-group">
-
-                                <div id="ParkingTypeR" style="display: none;">{{parking.ParkingType}}</div>
-                                <img v-if="parking.PS_type === '1'" id="handicapped"
-                                    src="./assets/image/map_image/handicapped.svg" style="margin: 2px;" alt="">
-                                <img v-if="parking.PS_type === '2'" id="Parent_Child"
-                                    src="./assets/image/map_image/Parent_Child.svg" style="margin: 2px;" alt="">
-                                <span v-if="parking.PS_type === '0'" style="margin: 2px;" alt="">&nbsp;</span>
-
-                                <img v-if="parking.status === '0'" id="status_light"
-                                    src="./assets/image/map_image/Vector_green.svg" style="margin: 4.2px;" alt="">
-                                <img v-else src="./assets/image/map_image/Vector_red.svg" style="margin: 4.2px;" alt="">
-                            </div>
-                        </button>
-                    </h2>
-                    <div :id="'collapse' + index" class="accordion-collapse collapse"
-                        :class="{show: activeCollapse === index}">
-                        <div class="accordion-body">
-                            <div id="load_addr">
-                                <p>車格編號：{{ parking.ceiiId }}</p>
-                            </div>
-                            <div class="row">
-                                <div id="update_info" class="col-8">
-                                    <p class="up_time">更新時間：{{ parking.Updatetime }}</p>
-                                </div>
-                                <div id="distance_info" class="col-4">
-                                    <p class="distance">{{ parking.distanceKM }}公里{{ parking.distanceM }}公尺</p>
-                                    <p class="distanceR" style="display: none;">{{ parking.distance }}</p>
-                                    <p class="distance_time">{{ parking.travelTime }}分鐘</p>
-                                </div>
-                            </div>
-                            <div id="roadX" style="display:none;">{{ parking.TWD97_X }}</div>
-                            <div id="roadY" style="display:none;">{{ parking.TWD97_Y }}</div>
-
-                            <img id="view_fee" class="btn" src="./assets/image/map_image/show_fee-btn.svg"
-                                @click="showDialog_roadfee(parking.paycash)" alt="">
-                            <!-- <img id="like" class="btn" src="./assets/image/map_image/like_btn.svg" alt=""> -->
-                            <img id="go" class="btn" src="./assets/image/map_image/go_btn.svg"
-                                @click="routing(parking.TWD97_Y, parking.TWD97_X)" alt="">
-                        </div>
-                    </div>
-                </div>
-                <!-- 收費資訊 -->
-                <dialog :key="parking.id" id="Dialog_road_fee">
-                    <div class="dialog-header">
-                        <h6 class="dialog-title">收費方式</h6>
-                        <i class="fas fa-times fa-xs close-icon" @click="closeDialog_roadfee()"></i>
-                    </div>
-                    <div class="dialog_fee_content">
-                        <h6>{{dialog_roadfee_content}}</h6>
-                    </div>
-                </dialog>
-            </div>
-        </div>
+        
 
         <br><br><br><br><br><br><br><br><br><br>
         <!-- Add more accordion items here -->
