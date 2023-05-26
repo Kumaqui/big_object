@@ -1,17 +1,6 @@
 var express = require('express');
 var api = express.Router();
 var config = require('./config.js')
-api.get('/:id/:memo', function (req, res) {
-    var sql = 'update pokemon set memo =?, pokedate=now() where id =?;'
-    config.query(sql, [req.params.memo, req.params.id],
-        function (err, result, fields) {
-            // console.log(err);
-            // console.log(result.insertId);
-            // console.log(result.affectedRows);
-            // console.log(fields);
-        })
-    res.send("修改成功");
-})
 api.put('/membermoney', function (req, res) {
     var sql = 'SELECT member_money  FROM member WHERE member_id=?;'    
     var sql1 = 'UPDATE member SET member_money=? where member_id=?;'   
@@ -49,16 +38,13 @@ api.put('/memberimg', function (req, res) {
                 
             }
         })
-        // console.log(x)
 })
 api.put('/ncread', function (req, res) {
     var sql = 'UPDATE traderecord SET tr_read = 1 WHERE member_id = ?;';
     var sql1 = 'UPDATE payment SET py_read = 1 WHERE license = ?;';
-
     // 假設 req.body.license 是一個包含多個車牌號碼的陣列
     var licenses = req.body.license;
     console.log(licenses);
-
     // 更新 traderecord 資料表
     config.query(sql, [req.body.id], (err, result) => {
         if (err) {
@@ -67,7 +53,6 @@ api.put('/ncread', function (req, res) {
             // res.send("result")
         }
     });
-
     // 逐一更新 payment 資料表中的車牌號碼
     licenses.forEach((license) => {
         config.query(sql1, [license], (err, result) => {
@@ -78,8 +63,6 @@ api.put('/ncread', function (req, res) {
             }
         });
     });
-
-    // console.log(x)
 });
 
 module.exports = api;
